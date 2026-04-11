@@ -183,17 +183,20 @@ SCENES = {
     },
 }
 
-# PHOTOREALISTIC prompt template - Female AI bot with exoskeleton
+# PHOTOREALISTIC prompt template - Female humanoid robot, highly detailed
 PROMPT_TEMPLATE = (
-    "Professional photorealistic photograph of a female AI bot with athletic build. "
-    "CONTINUE same bot - hard plastic and titanium exoskeleton armor, visible facial features, "
-    "translucent silicone skin showing internal structure, glowing cyan optical sensors for eyes, sexy athletic body. "
-    "16:9 widescreen, high-quality professional photography. "
-    "Style: PHOTOREALISTIC, NOT ANIMATED, NO CARTOON, NO ILLUSTRATION, NO ANIME. "
-    "Prominent exoskeleton, titanium limbs, tech aesthetic. "
+    "Professional photorealistic photograph of a realistic female humanoid robot/android, "
+    "SAME subject in ALL frames - attractive woman approximately 25-30 years old, "
+    "sleek silver and black titanium alloy body armor plating, "
+    "elegant feminine face with glowing cyan LED eyes/lights where eyes should be, "
+    "full lips, high cheekbones, realistic skin-like synthetic material, "
+    "visible tech joints at wrists elbows shoulders neck, sleek high-tech design. "
+    "16:9 widescreen, professional photography. "
+    "Style: PHOTOREALISTIC, NOT ANIMATED, NO CARTOON, NO CGI, NOT COMIC BOOK. "
+    "Cinematic lighting, dramatic bokeh background of tech lab/server room. "
     "Camera angle: {subject_angle}. "
-    "Scene: {description}. Mood: {mood}. "
-    "Shot on professional cinema camera, 8K ultra-detailed, dramatic lighting"
+    "Subject: {description}. Mood: {mood}. "
+    "Shot on RED cinema camera, 8K, hyper-realistic detail"
 )
 
 
