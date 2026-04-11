@@ -1,6 +1,15 @@
 import os
 from pathlib import Path
 
+# Try to load .env file if it exists
+try:
+    from dotenv import load_dotenv
+    env_path = Path(__file__).parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+except ImportError:
+    pass
+
 # Configuration file location
 CONFIG_DIR = Path(__file__).parent
 CONFIG_FILE = CONFIG_DIR / ".env"
