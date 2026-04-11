@@ -443,34 +443,36 @@ def add_cc_text(image_path, segment_text, output_path):
 
 
 def create_video(image_dir, audio_path, music_path, output_path):
-    """Create video with PROPER AUDIO SYNC and fade transitions."""
+    """Create video with PROPER AUDIO SYNC - fixed clip issue."""
     cc_images = sorted(Path(image_dir).glob("*_cc.png"))
+    cc_images = list(cc_images)
     if not cc_images:
         print(f"    No images")
         return None
     
-    # FIXED: Get actual audio duration
+    num_images = len(cc_images)
+    
+    # Get actual audio duration
     audio_duration = get_audio_duration(audio_path)
-    per_image_duration = audio_duration / len(list(cc_images))
+    per_image_duration = audio_duration / num_images
     print(f"    Audio duration: {audio_duration}s, {per_image_duration}s per image")
     
-    # Build FFmpeg with CROSSFADE transitions
+    # Build FFmpeg command
     cmd = ["ffmpeg", "-y"]
     for img in cc_images:
         cmd.extend(["-loop", "1", "-t", str(per_image_duration), "-i", str(img)])
     cmd.extend(["-i", str(audio_path)])
     cmd.extend(["-i", str(music_path)])
     
-    n = len(list(cc_images))
-    
-    # FIXED: Proper audio mixing with normalization
+    # FIXED: Audio mixing - ensure full audio plays, not clipped by -shortest
+    # Use alang to specify audio language, and ensure audio is fully used
     cmd.extend([
         "-filter_complex",
-        f"[{n}:a]volume=0.8[voice];[{n+1}:a]volume=0.3[music];[voice][music]amix=inputs=2:duration=first:normalize=1[outa]",
+        f"[{num_images}:a]volume=0.8[voice];[{num_images+1}:a]volume=0.3[music];[voice][music]amix=inputs=2:duration=longest:normalize=1[outa]",
         "-map", "0:v", "-map", "[outa]",
         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
         "-c:a", "aac", "-b:a", "192k",
-        "-shortest",
+        "-t", str(audio_duration),  # FIXED: Explicitly set output duration to audio length
         str(output_path)
     ])
     
@@ -480,7 +482,7 @@ def create_video(image_dir, audio_path, music_path, output_path):
         print(f"    Video saved: {output_path}")
         return output_path
     else:
-        print(f"    Video error: {result.stderr[:100]}")
+        print(f"    Video error: {result.stderr[:200]}")
         return None
 
 
@@ -564,12 +566,12 @@ def main():
         concat_file = Path("output_v3/concat.txt")
         with open(concat_file, "w") as f:
             for v in videos:
-                f.write(f"file '../{v}'\n")
+                f.write(f"file '{v}'\n")
         
         full = Path("output_v3/full_video.mp4")
         subprocess.run([
             "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-            "-i", str(concat_file), "-c", "copy", "-absf", "aac_adtstoasc", str(full)
+            "-i", str(concat_file), "-c", "copy", str(full)
         ], cwd=Path("output_v3"))
         print(f"  Full video: {full}")
     
