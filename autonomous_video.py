@@ -28,8 +28,11 @@ load_dotenv()
 
 ELEVENLABS_KEY = os.getenv("ELEVENLABS_API_KEY")
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 
-VOICE_ID = "kPzsL2i3teMYv0FxEYQ6"
+# Voice ID - stored in .env as ELEVENLABS_VOICE_ID
+# Default: Brittney (Social Media Voice)
+VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "kPzsL2i3teMYv0FxEYQ6")
 
 SCENES = {
     1: {
