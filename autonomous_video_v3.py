@@ -43,7 +43,7 @@ VIDEO_MODEL = os.getenv("VIDEO_MODEL", "kling")  # kilo, veo, kling-3-0-pro, etc
 # Video Output Settings
 CONFIG = {
     # CC Subtitles - Enable/disable burned-in text on images
-    "enable_cc": True,  # Set False to disable CC text on images
+    "enable_cc": False,  # DISABLED - no text on images
     
     # Image Generation Settings  
     "image_api": "gemini",  # gemini, elevenlabs, openai, nano_banana
