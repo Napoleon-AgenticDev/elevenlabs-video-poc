@@ -127,7 +127,7 @@ def enhance_local(concept):
 
 def generate_audio(text, output_file):
     """Generate voice using ElevenLabs v3."""
-    url = f"https://api.elevenlabs.io/v1/text_to_speech/{VOICE_ID}"
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
     headers = {"xi-api-key": API_KEYS["elevenlabs"]}
     data = {
         "text": text,

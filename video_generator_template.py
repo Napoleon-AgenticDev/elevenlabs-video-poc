@@ -126,7 +126,7 @@ def generate_audio(scene_num, output_dir):
     scene = SCENES[scene_num]
     text = scene["script"]
     
-    url = f"https://api.elevenlabs.io/v1/text_to_speech/{VOICE_ID}"
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
     headers = {"xi-api-key": API_KEYS["elevenlabs"]}
     data = {
         "text": text,
