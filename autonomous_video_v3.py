@@ -40,8 +40,31 @@ VIDEO_MODEL = os.getenv("VIDEO_MODEL", "kling")  # kilo, veo, kling-3-0-pro, etc
 # CONFIGURATION - All configurable parameters
 # ============================================================================
 
+# Content Rating - controls appearance of characters
+CONTENT_RATING = {
+    "G": {
+        "description": "family-friendly robot",
+        "prompt_add": "Clean tech aesthetic, fully covered body armor, friendly expression, no exposed skin beyond face and hands, corporate robot design, safe for all ages"
+    },
+    "PG": {
+        "description": "standard robot", 
+        "prompt_add": "Standard tech aesthetic, appropriate body armor, neutral expression, modest design suitable for general audiences"
+    },
+    "PG13": {
+        "description": "enhanced robot",
+        "prompt_add": "Modern tech aesthetic, sleek body armor showing some design elements, confident expression, slightly advanced but still appropriate"
+    },
+    "R": {
+        "description": "advanced robot",
+        "prompt_add": "Advanced humanoid design with visible tech elements and armor plating, athletic build, mature tech aesthetic, cinematic"
+    }
+}
+
 # Video Output Settings
 CONFIG = {
+    # Content Rating - G, PG, PG13, R (determines character appearance)
+    "content_rating": "R",  # Change to G, PG, PG13, or R
+    
     # CC Subtitles - Enable/disable burned-in text on images
     "enable_cc": False,  # DISABLED - no text on images
     
@@ -183,21 +206,24 @@ SCENES = {
     },
 }
 
-# PHOTOREALISTIC prompt template - Female humanoid robot, highly detailed
+# PHOTOREALISTIC prompt template - uses rating from CONFIG
 PROMPT_TEMPLATE = (
-    "Professional photorealistic photograph of a realistic female humanoid robot/android, "
-    "SAME subject in ALL frames - attractive woman approximately 25-30 years old, "
-    "sleek silver and black titanium alloy body armor plating, "
-    "elegant feminine face with glowing cyan LED eyes/lights where eyes should be, "
-    "full lips, high cheekbones, realistic skin-like synthetic material, "
-    "visible tech joints at wrists elbows shoulders neck, sleek high-tech design. "
+    "Professional photorealistic photograph of a realistic female humanoid robot/android. "
+    "SAME subject in ALL frames - {rating_prompt}. "
+    "Elegant feminine face with glowing cyan LED optical sensors, "
+    "high-quality synthetic skin material. "
     "16:9 widescreen, professional photography. "
-    "Style: PHOTOREALISTIC, NOT ANIMATED, NO CARTOON, NO CGI, NOT COMIC BOOK. "
+    "Style: PHOTOREALISTIC, NOT ANIMATED, NO CARTOON, NO CGI. "
     "Cinematic lighting, dramatic bokeh background of tech lab/server room. "
     "Camera angle: {subject_angle}. "
     "Subject: {description}. Mood: {mood}. "
     "Shot on RED cinema camera, 8K, hyper-realistic detail"
 )
+
+def get_rating_prompt():
+    """Get prompt addition based on content rating."""
+    rating = CONFIG.get("content_rating", "PG13")
+    return CONTENT_RATING.get(rating, CONTENT_RATING["PG13"])["prompt_add"]
 
 
 def check_deps():
@@ -337,13 +363,14 @@ def wait_for_elevenlabs_image(task_id, output_path, max_wait=120):
 
 def generate_image_gemini(description, mood, output_path, character="", subject_angle="medium_shot"):
     """Generate image with CONTINOITY and motion."""
-    print(f"  Generating image...")
+    print(f"  Generating image... (rating: {CONFIG.get('content_rating', 'PG13')})")
     
     prompt = PROMPT_TEMPLATE.format(
         description=description, 
         mood=mood,
         character=character,
-        subject_angle=subject_angle
+        subject_angle=subject_angle,
+        rating_prompt=get_rating_prompt()
     )
     
     result = generate_image_elevenlabs(prompt, output_path)
