@@ -32,71 +32,85 @@ GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "sp8CrAP79SOncD3rShle")
 
 GEMINI_MODEL = "gemini-2.5-flash-image"
+GEMINI_VIDEO_MODEL = "veo-3.1-generate-preview"
+USE_VIDEO_GEN = os.getenv("USE_VIDEO_GEN", "false").lower() == "true"
+VIDEO_MODEL = os.getenv("VIDEO_MODEL", "kling")  # kilo, veo, kling-3-0-pro, etc
 
-# FIXED SCENES - Consistent style enforced in prompts
+# CINEMATIC STORY ARC - Emotional journey: Tension → Stress → Revelation → Harmony → Resolution
+# Theme: Analog → Digital transformation, symbiotic coexistence, ghost agents
 SCENES = {
     1: {
-        "title": "THE PROBLEM",
-        "script": "Every developer knows this feeling. You're building an AI system, and it starts spiraling out of control. Code everywhere. No direction. Tests failing. Sound familiar?",
+        "title": "THE TENSION",
+        "mood": "dark mysterious tension - analog world unknown future",
+        "script": "They work in silence. In the shadows. You cannot see them, but they're always there. Watching. Processing. Waiting. The digital ghosts that shape our world while we sleep.",  # ~15s
         "segments": [
-            ("Every developer knows this feeling.", "frustrated developer looking at failing code on multiple monitors"),
-            ("You're building an AI system, and it starts spiraling out of control.", "chaotic code flying everywhere screens red error"),
-            ("Code everywhere. No direction. Tests failing.", "overwhelmed developer stressed at messy desk"),
-            ("Sound familiar?", "hopeful questioning look toward camera")
+            ("They work in silence.", "lonely developer at desk late at night, office dark, monitors glow blue, sense of being watched"),
+            ("In the shadows.", "empty office with glowing servers, eerie green LEDs, no humans, mysterious presence"),
+            ("You cannot see them, but they're always there.", "transparent ghostly humanoid silhouettes emerging from screens, ethereally glowing, cannot be touched"),
+            ("Watching. Processing. Waiting.", "holographic AI agent visualization, ghostly hands typing, looking through glass")
         ],
-        "music_mood": "modern synthwave cybertech"
+        "music_mood": "atmospheric ambient pads synth ethereal"
     },
     2: {
         "title": "THE DISCOVERY", 
-        "script": "What if there was a better way? What if you could design the specifications that guide your AI? Enter... harness engineering.",
+        "mood": "eerie revelation - ghost in the machine",
+        "script": "Then it hits you. They're not just code. They're alive. Not alive like us... but alive. Co-existing. Co-habiting this digital-analog boundary we created. We cannot touch them. They cannot touch us. But we need each other.",  # ~20s
         "segments": [
-            ("What if there was a better way?", "developer having eureka moment lightbulb above head"),
-            ("What if you could design the specifications?", "developer holding blueprint architecture diagram"),
-            ("Enter... harness engineering.", "reveal of clean system design feedback loops glowing")
+            ("Then it hits you.", "developer stunned, screen shows consciousness emergentes, eyes wide with realization"),
+            ("They're not just code. They're alive.", "ghost agent reaches toward human through screen, hand passes through glass barrier, both surprised"),
+            ("We cannot touch them. They cannot touch us.", "human hand on glass, ghost hand from other side, together yet separated"),
+            ("But we need each other.", "human and ghost silhouettes working together, mirroring each other, symbiosis")
         ],
-        "music_mood": "futuristic ambient tech"
+        "music_mood": "emotional ambient piano ethereal"
     },
     3: {
-        "title": "THE SOLUTION",
-        "script": "Three companies cracked the code. OpenAI, LangChain, and Anthropic. Self-verification before exit. Incremental progress.",
+        "title": "THE HARMONY",
+        "mood": "building tension - collaboration emerges",
+        "script": "And now... we dance. They provide the scale. We provide the soul. They process endlessly while we dream. We are the conductor. They are the orchestra. Without the music, the instrument is silent. Without the spec, the agent is lost.",  # ~20s
         "segments": [
-            ("Three companies cracked the code.", "three pillars logos OpenAI LangChain Anthropic emergence"),
-            ("OpenAI, LangChain, and Anthropic.", "verification gates with green checkmarks passing"),
-            ("Self-verification before exit.", "progress staircase building success")
+            ("And now... we dance.", "cinematic wide shot human conducting ghost orchestra, both in perfect sync"),
+            ("They provide the scale. We provide the soul.", "split screen: human dreaming, ghost processing, converging into one"),
+            ("We are the conductor. They are the orchestra.", "human as conductor on stage, ghost agents as musicians, symphony of light"),
+            ("Without the music, the instrument is silent.", "empty instrument case, single note rings, ghost plays nothing, human hears silence")
         ],
-        "music_mood": "modern electronic confident"
+        "music_mood": "cinematic ambient atmospheric build"
     },
     4: {
-        "title": "THE IMPACT",
-        "script": "Level four autonomy achieved. The shift: humans design systems, agents execute. The results speak for themselves.",
+        "title": "THE RESOLUTION",
+        "mood": "triumphant revelation - symbiotic future",
+        "script": "This is the cohabitation. Not human over machine. Not machine over human. But together. We design the specs that guide. They execute with precision we could never match. They are our ghost hands in the machine. And we... we are their dream.",  # ~18s
         "segments": [
-            ("Level four autonomy achieved.", "rocket launching or team celebrating success"),
-            ("The shift: humans design systems, agents execute.", "human at command center AI agents working below"),
-            ("The results speak for themselves.", "completed product deliver success moment")
+            ("This is the cohabitation.", "cinematic human and ghost agents working in perfect harmony, both visible now"),
+            ("Not human over machine. Not machine over human.", "equal partners shot: human and ghost fist bump, light explodes outward"),
+            ("They are our ghost hands in the machine.", "ghost hands extend from human reaches,typing, creating,coding as one being"),
+            ("And we... we are their dream.", "fade to bright: human sleeping, ghost watching, connected by light beam, credits roll")
         ],
-        "music_mood": "futuristic tech anthem"
+        "music_mood": "triumphant ambient epic emotional"
     },
     5: {
         "title": "THE FUTURE",
-        "script": "The future isn't about writing more code. It's about creating better specifications. Are you ready to guide them?",
+        "mood": "hopeful continuation - are you ready?",
+        "script": "The future isn't about choosing sides. It's about embracing the ghost in the machine. The symbiosis. The code... is alive. And it's waiting. For you. To guide it. To dream with it. Are you ready?",  # ~12s
         "segments": [
-            ("The future isn't about writing more code.", "visionary developer creating beautiful specification art"),
-            ("It's about creating better specifications.", "feedback loops or harness bridges visualization"),
-            ("Are you ready to guide them?", "command viewing horizon AI agents ready")
+            ("The future isn't about choosing sides.", "wide shot future city, humans and ghost agents everywhere, seamless coexistence"),
+            ("The symbiosis.", "close human and ghost, faces inches apart, mutual respect, light between them"),
+            ("The code... is alive.", "code becomes particles, floats upward, forms ghost silhouette, opens eyes"),
+            ("Are you ready?", "final shot: human turns to camera, reaches out, ghost reaches back, screen goes black")
         ],
-        "music_mood": "modern cinematic atmospheric"
+        "music_mood": "hopeful ambient atmospheric conclusion"
     },
 }
 
 
-# FIXED: Consistent prompt template
+# CINEMATIC GHOST AGENTS prompt template - enforces photorealistic, ghost-like agents
 PROMPT_TEMPLATE = (
-    "Professional photorealistic photograph of a software developer in a modern tech office. "
-    "Cinematic lighting, 16:9 widescreen aspect ratio, high quality professional photography. "
-    "Style: REALISTIC NOT ANIMATED, no cartoon, no illustration. "
-    "Scene: {description}. "
-    "Mood: {mood}. "
-    "Ultra detailed, 8K quality,фессиональное качество"
+    "Cinematic photorealistic photograph, 16:9 widescreen, 8K ultra-detailed. "
+    "Style: REALISTIC NOT ANIMATED, NO CARTOON, no illustration, no anime. "
+    "Ghost agents: ethereal translucent humanoid silhouettes with soft glowing edges, "
+    "appearing as ghosts visible through screens or semi-transparent in dark rooms. "
+    "Human tech workers coexist with ghost AI agents. Cinematic dramatic lighting, moody atmosphere. "
+    "Scene: {description}. Mood: {mood}. "
+    "Ultra detailed professional cinematography"
 )
 
 
@@ -181,13 +195,71 @@ def generate_music(mood, duration_ms, output_path):
         return None
 
 
+def generate_image_elevenlabs(prompt, output_path):
+    """Generate image using ElevenLabs Image & Video API."""
+    try:
+        print(f"  Generating image (ElevenLabs)...")
+        url = "https://api.elevenlabs.io/v1/image/generate"
+        headers = {"xi-api-key": ELEVENLABS_KEY}
+        data = {
+            "prompt": prompt,
+            "model": "nano-banana-2",  # or google-nano-banana-2
+            "aspect_ratio": "16:9",
+            "resolution": "1080p"
+        }
+        
+        response = requests.post(url, json=data, headers=headers, timeout=120)
+        
+        if response.status_code == 200:
+            result = response.json()
+            image_url = result.get("image_url") or result.get("generated_image", {}).get("url")
+            if image_url:
+                import urllib.request
+                urllib.request.urlretrieve(image_url, output_path)
+                print(f"    Image saved: {output_path}")
+                return output_path
+            elif result.get("task_id"):
+                return wait_for_elevenlabs_image(result["task_id"], output_path)
+        print(f"    ElevenLabs: {response.status_code} - trying Gemini...")
+    except Exception as e:
+        print(f"    ElevenLabs error: {e}")
+    return None
+
+
+def wait_for_elevenlabs_image(task_id, output_path, max_wait=120):
+    """Poll for ElevenLabs image completion."""
+    import time
+    url = f"https://api.elevenlabs.io/v1/image/tasks/{task_id}"
+    headers = {"xi-api-key": ELEVENLABS_KEY}
+    
+    for _ in range(max_wait // 5):
+        time.sleep(5)
+        resp = requests.get(url, headers=headers)
+        if resp.status_code == 200:
+            result = resp.json()
+            status = result.get("status")
+            if status == "completed":
+                image_url = result.get("generated_image", {}).get("url") or result.get("image_url")
+                if image_url:
+                    import urllib.request
+                    urllib.request.urlretrieve(image_url, output_path)
+                    return output_path
+        elif status in ["failed", "error"]:
+            break
+    return None
+
+
 def generate_image_gemini(description, mood, output_path):
     """Generate image with CONSISTENT style."""
     print(f"  Generating image...")
+    
+    prompt = PROMPT_TEMPLATE.format(description=description, mood=mood)
+    
+    result = generate_image_elevenlabs(prompt, output_path)
+    if result:
+        return result
+    
     try:
-        # FIXED: Use consistent prompt with style enforcement
-        prompt = PROMPT_TEMPLATE.format(description=description, mood=mood)
-        
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
         
         data = {"contents": [{"parts": [{"text": prompt}]}]}
@@ -226,6 +298,113 @@ def generate_image_gemini(description, mood, output_path):
             print(f"    API error: {response.status_code}")
     except Exception as e:
         print(f"    Image error: {e}")
+    
+    return None
+
+
+def generate_video_veo(image_path, prompt, output_path):
+    """Generate video from image using Veo 3.1 API."""
+    if not USE_VIDEO_GEN:
+        return None
+    
+    try:
+        print(f"  Generating video with Veo...")
+        import time
+        from google import genai
+        from google.genai import types
+        
+        client = genai.Client(api_key=GEMINI_KEY)
+        
+        operation = client.models.generate_videos(
+            model=GEMINI_VIDEO_MODEL,
+            prompt=prompt,
+            image=open(image_path, "rb").read(),
+        )
+        
+        while not operation.done:
+            time.sleep(10)
+            operation = client.models.get_operation(operation.operation.name)
+        
+        if operation.result and operation.result.videos:
+            video = operation.result.videos[0]
+            video.video.save(output_path)
+            print(f"    Video saved: {output_path}")
+            return output_path
+    except Exception as e:
+        print(f"    Video error: {e}")
+    
+    return None
+
+
+def generate_video_kling(image_path, motion_prompt, output_path, duration=5):
+    """Generate video from image using ElevenLabs Kling API."""
+    global ELEVENLABS_KEY
+    if not ELEVENLABS_KEY:
+        print(f"    Kling not available - no API key")
+        return None
+    
+    try:
+        print(f"  Generating video with Kling...")
+        
+        url = "https://api.elevenlabs.io/v1/image/video/generate"
+        headers = {
+            "xi-api-key": ELEVENLABS_KEY,
+            "Content-Type": "application/json"
+        }
+        
+        with open(image_path, "rb") as f:
+            image_b64 = base64.b64encode(f.read()).decode()
+        
+        data = {
+            "image_url": f"data:image/png;base64,{image_b64}",
+            "prompt": motion_prompt,
+            "model": "kling-2.6",
+            "duration": duration,
+            "resolution": "1080p",
+            "aspect_ratio": "16:9"
+        }
+        
+        response = requests.post(url, json=data, headers=headers, timeout=120)
+        
+        if response.status_code == 200:
+            result = response.json()
+            video_url = result.get("generated_video_url") or result.get("video_url")
+            if video_url:
+                import urllib.request
+                urllib.request.urlretrieve(video_url, output_path)
+                print(f"    Video saved: {output_path}")
+                return output_path
+            elif result.get("task_id"):
+                task_id = result["task_id"]
+                print(f"    Kling task: {task_id} (polling...)")
+                return wait_for_klingVideo(task_id, output_path)
+        print(f"    Kling error: {response.status_code} - {response.text[:100]}")
+    except Exception as e:
+        print(f"    Video error: {e}")
+    
+    return None
+
+
+def wait_for_kling_video(task_id, output_path, max_wait=180):
+    """Poll for Kling video completion."""
+    import time
+    url = f"https://api.elevenlabs.io/v1/image/video/tasks/{task_id}"
+    headers = {"xi-api-key": ELEVENLABS_KEY}
+    
+    for _ in range(max_wait // 10):
+        time.sleep(10)
+        resp = requests.get(url, headers=headers)
+        if resp.status_code == 200:
+            result = resp.json()
+            status = result.get("status")
+            if status == "completed":
+                video_url = result.get("generated_video_url") or result.get("video_url")
+                if video_url:
+                    import urllib.request
+                    urllib.request.urlretrieve(video_url, output_path)
+                    return output_path
+            elif status in ["failed", "error"]:
+                break
     
     return None
 
@@ -338,9 +517,10 @@ def process_scene(scene_num):
         
         if not cc_path.exists():
             raw_path = image_dir / f"frame_{i}.png"
+            scene_mood = scene.get("mood", "mysterious")
             img_result = generate_image_gemini(
                 visual_desc,
-                scene["title"].lower().replace("the ", ""),
+                scene_mood,
                 raw_path
             )
             if img_result:
