@@ -6,7 +6,7 @@ CONFIG_DIR = Path(__file__).parent
 CONFIG_FILE = CONFIG_DIR / ".env"
 
 # API Configuration
-API_KEY = os.getenv("ELEVENLABS_API_KEY", "sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632")
+API_KEY = os.getenv("ELEVENLABS_API_KEY", "YOUR_API_KEY_HERE")
 BASE_URL = "https://api.elevenlabs.io"
 
 # Voice Configuration

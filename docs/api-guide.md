@@ -51,11 +51,11 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
 
 Before you can call the API, you need a special password. It's like showing an ID card before entering a building!
 
-Your API key: `sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632`
+Your API key: `YOUR_API_KEY_HERE`
 
 **You need this in every request:**
 ```
-Header: xi-api-key: sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632
+Header: xi-api-key: YOUR_API_KEY_HERE
 ```
 
 ## The Voices You Can Use
@@ -104,7 +104,7 @@ You can change how the voice sounds:
 ### Single Voice:
 ```bash
 curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/kPzsL2i3teMYv0FxEYQ6" \
-  -H "xi-api-key: sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632" \
+  -H "xi-api-key: YOUR_API_KEY_HERE" \
   -H "Content-Type: application/json" \
   -d '{
     "text": "Hello world!",
@@ -117,7 +117,7 @@ curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/kPzsL2i3teMYv0FxEYQ6" 
 ### Multiple Voices:
 ```bash
 curl -X POST "https://api.elevenlabs.io/v1/text-to-dialogue" \
-  -H "xi-api-key: sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632" \
+  -H "xi-api-key: YOUR_API_KEY_HERE" \
   -H "Content-Type: application/json" \
   -d '{
     "inputs": [
@@ -134,7 +134,7 @@ curl -X POST "https://api.elevenlabs.io/v1/text-to-dialogue" \
 import requests
 
 # Your settings
-API_KEY = "sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632"
+API_KEY = "YOUR_API_KEY_HERE"
 VOICE_ID = "kPzsL2i3teMYv0FxEYQ6"
 
 # Make the request

@@ -4,7 +4,7 @@
 
 ```bash
 # Copy this to .env file
-ELEVENLABS_API_KEY=sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632
+ELEVENLABS_API_KEY=YOUR_API_KEY_HERE
 ```
 
 ## Voice Configuration

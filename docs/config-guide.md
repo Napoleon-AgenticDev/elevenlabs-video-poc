@@ -8,7 +8,7 @@
 
 ```python
 # API Configuration
-API_KEY = "sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632"
+API_KEY = "YOUR_API_KEY_HERE"
 BASE_URL = "https://api.elevenlabs.io"
 
 # Voice Configuration
@@ -29,7 +29,7 @@ DEFAULT_MODEL = "eleven_v3"
 This is your magic key to use ElevenLabs!
 
 ```python
-API_KEY = "sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632"
+API_KEY = "YOUR_API_KEY_HERE"
 BASE_URL = "https://api.elevenlabs.io"
 ```
 
@@ -141,7 +141,7 @@ VOICE_SETTINGS = {
 Create a `.env` file (copy from `.env.example`):
 
 ```
-ELEVENLABS_API_KEY=sk_1818f1c49bcb09529927e0e6f8606d079c232963dbf31632
+ELEVENLABS_API_KEY=YOUR_API_KEY_HERE
 DEFAULT_VOICE=brittney
 ```
 
