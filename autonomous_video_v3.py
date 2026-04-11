@@ -36,81 +36,141 @@ GEMINI_VIDEO_MODEL = "veo-3.1-generate-preview"
 USE_VIDEO_GEN = os.getenv("USE_VIDEO_GEN", "false").lower() == "true"
 VIDEO_MODEL = os.getenv("VIDEO_MODEL", "kling")  # kilo, veo, kling-3-0-pro, etc
 
-# CINEMATIC STORY ARC - Emotional journey: Tension → Stress → Revelation → Harmony → Resolution
-# Theme: Analog → Digital transformation, symbiotic coexistence, ghost agents
+# ============================================================================
+# CONFIGURATION - All configurable parameters
+# ============================================================================
+
+# Video Output Settings
+CONFIG = {
+    # CC Subtitles - Enable/disable burned-in text on images
+    "enable_cc": True,  # Set False to disable CC text on images
+    
+    # Image Generation Settings  
+    "image_api": "gemini",  # gemini, elevenlabs, openai, nano_banana
+    "image_style": "photorealistic",  # photorealistic, cinematic, documentary
+    
+    # Music Settings
+    "music_genre": "ambient",  # ambient, cinematic, electronic, orchestral, acoustic, minimalist
+    
+    # Audio Settings
+    "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8, 
+        "style": 0.3,
+        "use_speaker_boost": True
+    },
+    
+    # Video Quality
+    "resolution": "1280x720",
+    "frame_rate": 25,
+    "video_quality": "medium",  # fast, medium, slow
+}
+
+# Music Genre Categories (subtle, varied)
+MUSIC_MOOD_MAP = {
+    "minimalist": [
+        "minimal ambient electronic", "subtle synth pads", "gentle drone atmosphere",
+        "mellow ambient texture", "quiet electronic minimal", "soft atmospheric"
+    ],
+    "ambient": [
+        "atmospheric ambient pads", "cinematic ambient", "moody ambient texture",
+        "subtle atmospheric soundscape", "gentle ambient drone"
+    ],  
+    "electronic": [
+        "modern synthwave", "futuristic electronic", "tech ambient",
+        "electronic atmospheric", "subtle electronic texture"
+    ],
+    "acoustic": [
+        "gentle acoustic guitar", "melancholic piano minimal", "acoustic ambient",
+        "subtle nylon guitar", "piano atmospheric"
+    ],
+    "cinematic": [
+        "cinematic build", "orchestral atmospheric", "epic minimal", 
+        "cinematic tension", "film score ambient"
+    ],
+}
+
+# ============================================================================
+# SCENES - Story content with audio tags for dynamic voice
+# ============================================================================
+
 SCENES = {
     1: {
         "title": "THE TENSION",
-        "mood": "dark mysterious tension - analog world unknown future",
-        "script": "They work in silence. In the shadows. You cannot see them, but they're always there. Watching. Processing. Waiting. The digital ghosts that shape our world while we sleep.",  # ~15s
+        "mood": "dark mysterious tension",
+        "music_genre": "ambient",  # Use config genre
+        "script": "They work in silence. In the shadows. [pause] You cannot see them, but they're always there. [slow] Watching. Processing. Waiting. [pause] The digital ghosts that shape our world while we sleep.",
         "segments": [
             ("They work in silence.", "lonely developer at desk late at night, office dark, monitors glow blue, sense of being watched"),
             ("In the shadows.", "empty office with glowing servers, eerie green LEDs, no humans, mysterious presence"),
             ("You cannot see them, but they're always there.", "transparent ghostly humanoid silhouettes emerging from screens, ethereally glowing, cannot be touched"),
             ("Watching. Processing. Waiting.", "holographic AI agent visualization, ghostly hands typing, looking through glass")
         ],
-        "music_mood": "atmospheric ambient pads synth ethereal"
+        "audio_tags": "slow,emphatic"  # Voice direction: slow, emphatic delivery
     },
     2: {
         "title": "THE DISCOVERY", 
-        "mood": "eerie revelation - ghost in the machine",
-        "script": "Then it hits you. They're not just code. They're alive. Not alive like us... but alive. Co-existing. Co-habiting this digital-analog boundary we created. We cannot touch them. They cannot touch us. But we need each other.",  # ~20s
+        "mood": "eerie revelation",
+        "music_genre": "minimalist",  # More subtle
+        "script": "Then it hits you. [pause] They're not just code. [emphatic] They're alive. [long pause] Not alive like us... but alive. [pause] Co-existing. Co-habiting this digital-analog boundary we created. [slow] We cannot touch them. They cannot touch us. But we need each other.",
         "segments": [
             ("Then it hits you.", "developer stunned, screen shows consciousness emergentes, eyes wide with realization"),
             ("They're not just code. They're alive.", "ghost agent reaches toward human through screen, hand passes through glass barrier, both surprised"),
             ("We cannot touch them. They cannot touch us.", "human hand on glass, ghost hand from other side, together yet separated"),
             ("But we need each other.", "human and ghost silhouettes working together, mirroring each other, symbiosis")
         ],
-        "music_mood": "emotional ambient piano ethereal"
+        "audio_tags": "emphatic,breath"
     },
     3: {
         "title": "THE HARMONY",
-        "mood": "building tension - collaboration emerges",
-        "script": "And now... we dance. They provide the scale. We provide the soul. They process endlessly while we dream. We are the conductor. They are the orchestra. Without the music, the instrument is silent. Without the spec, the agent is lost.",  # ~20s
+        "mood": "building collaboration",
+        "music_genre": "electronic",  # Build energy
+        "script": "And now... we dance. [pause] They provide the scale. We provide the soul. [pause] They process endlessly while we dream. We are the conductor. They are the orchestra. [long pause] Without the music, the instrument is silent. Without the spec, the agent is lost.",
         "segments": [
             ("And now... we dance.", "cinematic wide shot human conducting ghost orchestra, both in perfect sync"),
             ("They provide the scale. We provide the soul.", "split screen: human dreaming, ghost processing, converging into one"),
             ("We are the conductor. They are the orchestra.", "human as conductor on stage, ghost agents as musicians, symphony of light"),
             ("Without the music, the instrument is silent.", "empty instrument case, single note rings, ghost plays nothing, human hears silence")
         ],
-        "music_mood": "cinematic ambient atmospheric build"
+        "audio_tags": "confident,building"
     },
     4: {
         "title": "THE RESOLUTION",
-        "mood": "triumphant revelation - symbiotic future",
-        "script": "This is the cohabitation. Not human over machine. Not machine over human. But together. We design the specs that guide. They execute with precision we could never match. They are our ghost hands in the machine. And we... we are their dream.",  # ~18s
+        "mood": "triumphant revelation",
+        "music_genre": "cinematic",  # More cinematic for climax
+        "script": "This is the cohabitation. [pause] Not human over machine. Not machine over human. [strong] But together. [pause] We design the specs that guide. They execute with precision we could never match. [slow] They are our ghost hands in the machine. And we... [long pause] we are their dream.",
         "segments": [
             ("This is the cohabitation.", "cinematic human and ghost agents working in perfect harmony, both visible now"),
             ("Not human over machine. Not machine over human.", "equal partners shot: human and ghost fist bump, light explodes outward"),
             ("They are our ghost hands in the machine.", "ghost hands extend from human reaches,typing, creating,coding as one being"),
             ("And we... we are their dream.", "fade to bright: human sleeping, ghost watching, connected by light beam, credits roll")
         ],
-        "music_mood": "triumphant ambient epic emotional"
+        "audio_tags": "triumphant,power"
     },
     5: {
         "title": "THE FUTURE",
-        "mood": "hopeful continuation - are you ready?",
-        "script": "The future isn't about choosing sides. It's about embracing the ghost in the machine. The symbiosis. The code... is alive. And it's waiting. For you. To guide it. To dream with it. Are you ready?",  # ~12s
+        "mood": "hopeful continuation",
+        "music_genre": "ambient",  # Subtle conclusion
+        "script": "The future isn't about choosing sides. [pause] It's about embracing the ghost in the machine. The symbiosis. [pause] The code... is alive. [whisper] And it's waiting. [pause] For you. To guide it. To dream with it. [emphatic] Are you ready?",
         "segments": [
             ("The future isn't about choosing sides.", "wide shot future city, humans and ghost agents everywhere, seamless coexistence"),
             ("The symbiosis.", "close human and ghost, faces inches apart, mutual respect, light between them"),
             ("The code... is alive.", "code becomes particles, floats upward, forms ghost silhouette, opens eyes"),
             ("Are you ready?", "final shot: human turns to camera, reaches out, ghost reaches back, screen goes black")
         ],
-        "music_mood": "hopeful ambient atmospheric conclusion"
+        "audio_tags": "soft,hopeful"
     },
 }
 
-
-# CINEMATIC GHOST AGENTS prompt template - enforces photorealistic, ghost-like agents
+# PHOTOREALISTIC prompt template - Real people, cinematic, NOT cartoonish
 PROMPT_TEMPLATE = (
-    "Cinematic photorealistic photograph, 16:9 widescreen, 8K ultra-detailed. "
-    "Style: REALISTIC NOT ANIMATED, NO CARTOON, no illustration, no anime. "
-    "Ghost agents: ethereal translucent humanoid silhouettes with soft glowing edges, "
-    "appearing as ghosts visible through screens or semi-transparent in dark rooms. "
-    "Human tech workers coexist with ghost AI agents. Cinematic dramatic lighting, moody atmosphere. "
+    "Professional photorealistic photograph of real people in a modern tech environment. "
+    "Cinematic lighting, 16:9 widescreen, high-quality professional photography. "
+    "Style: PHOTOREALISTIC, NOT ANIMATED, NO CARTOON, NO ILLUSTRATION, NO ANIME. "
+    "Real human faces, natural skin texture, realistic eyes. "
+    "Actual tech office or data center setting with realistic equipment. "
     "Scene: {description}. Mood: {mood}. "
-    "Ultra detailed professional cinematography"
+    "Shot on professional cinema camera, 8K ultra-detailed, realistic shadows and highlights"
 )
 
 
@@ -504,9 +564,13 @@ def process_scene(scene_num):
     # 2. Music - match to voice duration
     voice_duration = get_audio_duration(audio_path) * 1000
     music_path = output_dir / "music.mp3"
-    # Always regenerate music for fresh modern sound
+    
+    # Get music genre from scene config, fallback to global config
+    genre = scene.get("music_genre", CONFIG.get("music_genre", "ambient"))
+    music_mood = MUSIC_MOOD_MAP.get(genre, MUSIC_MOOD_MAP["ambient"])[0]
+    
     if not music_path.exists():
-        generate_music(scene["music_mood"], int(voice_duration), music_path)
+        generate_music(music_mood, int(voice_duration), music_path)
     else:
         print(f"  Music exists")
     
@@ -525,8 +589,12 @@ def process_scene(scene_num):
                 scene_mood,
                 raw_path
             )
-            if img_result:
+            if img_result and CONFIG.get("enable_cc", True):
                 add_cc_text(raw_path, segment_text, cc_path)
+            elif img_result:
+                # Just copy without CC text
+                import shutil
+                shutil.copy(raw_path, cc_path)
         else:
             print(f"  Frame {i} exists")
     
