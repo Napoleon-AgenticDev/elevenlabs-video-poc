@@ -195,13 +195,71 @@ def generate_music(mood, duration_ms, output_path):
         return None
 
 
+def generate_image_elevenlabs(prompt, output_path):
+    """Generate image using ElevenLabs Image & Video API."""
+    try:
+        print(f"  Generating image (ElevenLabs)...")
+        url = "https://api.elevenlabs.io/v1/image/generate"
+        headers = {"xi-api-key": ELEVENLABS_KEY}
+        data = {
+            "prompt": prompt,
+            "model": "nano-banana-2",  # or google-nano-banana-2
+            "aspect_ratio": "16:9",
+            "resolution": "1080p"
+        }
+        
+        response = requests.post(url, json=data, headers=headers, timeout=120)
+        
+        if response.status_code == 200:
+            result = response.json()
+            image_url = result.get("image_url") or result.get("generated_image", {}).get("url")
+            if image_url:
+                import urllib.request
+                urllib.request.urlretrieve(image_url, output_path)
+                print(f"    Image saved: {output_path}")
+                return output_path
+            elif result.get("task_id"):
+                return wait_for_elevenlabs_image(result["task_id"], output_path)
+        print(f"    ElevenLabs: {response.status_code} - trying Gemini...")
+    except Exception as e:
+        print(f"    ElevenLabs error: {e}")
+    return None
+
+
+def wait_for_elevenlabs_image(task_id, output_path, max_wait=120):
+    """Poll for ElevenLabs image completion."""
+    import time
+    url = f"https://api.elevenlabs.io/v1/image/tasks/{task_id}"
+    headers = {"xi-api-key": ELEVENLABS_KEY}
+    
+    for _ in range(max_wait // 5):
+        time.sleep(5)
+        resp = requests.get(url, headers=headers)
+        if resp.status_code == 200:
+            result = resp.json()
+            status = result.get("status")
+            if status == "completed":
+                image_url = result.get("generated_image", {}).get("url") or result.get("image_url")
+                if image_url:
+                    import urllib.request
+                    urllib.request.urlretrieve(image_url, output_path)
+                    return output_path
+        elif status in ["failed", "error"]:
+            break
+    return None
+
+
 def generate_image_gemini(description, mood, output_path):
     """Generate image with CONSISTENT style."""
     print(f"  Generating image...")
+    
+    prompt = PROMPT_TEMPLATE.format(description=description, mood=mood)
+    
+    result = generate_image_elevenlabs(prompt, output_path)
+    if result:
+        return result
+    
     try:
-        # FIXED: Use consistent prompt with style enforcement
-        prompt = PROMPT_TEMPLATE.format(description=description, mood=mood)
-        
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
         
         data = {"contents": [{"parts": [{"text": prompt}]}]}
