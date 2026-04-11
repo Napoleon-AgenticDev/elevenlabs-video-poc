@@ -104,7 +104,7 @@ def generate_voice(text, output_path):
     """Generate voice using ElevenLabs."""
     import requests
     
-    url = f"https://api.elevenlabs.io/v1/text_to_speech/{VOICE_ID}"
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
     headers = {"xi-api-key": ELEVENLABS_KEY}
     data = {
         "text": text,
