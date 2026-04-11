@@ -1,0 +1,19 @@
+1
+00:00:00,200 --> 00:00:02,000
+The results speak for themselves.
+
+2
+00:00:02,500 --> 00:00:05,500
+OpenAI reached level four autonomy.
+
+3
+00:00:06,000 --> 00:00:09,000
+Agents that can go from prompt to PR.
+
+4
+00:00:09,500 --> 00:00:12,500
+Humans don't write code anymore.
+
+5
+00:00:13,000 --> 00:00:16,000
+They design systems. Agents execute.
