@@ -49,8 +49,13 @@ CONFIG = {
     "image_api": "gemini",  # gemini, elevenlabs, openai, nano_banana
     "image_style": "photorealistic",  # photorealistic, cinematic, documentary
     
+    # Visual Settings for engagement
+    "images_per_segment": 2,  # Multiple images per segment for movement
+    "camera_movement": True,  # Enable Ken Burns/pan/zoom effects in video
+    "movement_intensity": "medium",  # subtle, medium, dynamic
+    
     # Music Settings
-    "music_genre": "ambient",  # ambient, cinematic, electronic, orchestral, acoustic, minimalist
+    "music_genre": "ambient",  # ambient, cinematic, electronic, acoustic, minimalist
     
     # Audio Settings
     "voice_settings": {
@@ -99,78 +104,96 @@ SCENES = {
         "title": "THE TENSION",
         "mood": "dark mysterious tension",
         "music_genre": "ambient",  # Use config genre
+        # GHOST AI BOT: Female, athletic, prominent, hard plastic/titanium exoskeleton
+        "character": "Female AI bot, athletic slender build, prominent hard plastic and titanium exoskeleton armor, visible facial features, sexy confident expression, glowing cyan optical sensors for eyes, translucent silicone skin showing internal structure, athletic pose",  
+        "subject_angle": "medium_shot",
         "script": "They work in silence. In the shadows. [pause] You cannot see them, but they're always there. [slow] Watching. Processing. Waiting. [pause] The digital ghosts that shape our world while we sleep.",
         "segments": [
-            ("They work in silence.", "lonely developer at desk late at night, office dark, monitors glow blue, sense of being watched"),
-            ("In the shadows.", "empty office with glowing servers, eerie green LEDs, no humans, mysterious presence"),
-            ("You cannot see them, but they're always there.", "transparent ghostly humanoid silhouettes emerging from screens, ethereally glowing, cannot be touched"),
-            ("Watching. Processing. Waiting.", "holographic AI agent visualization, ghostly hands typing, looking through glass")
+            ("They work in silence.", "female AI bot in dark server room, glowing cyan eyes, hard plastic armor reflects blue light, athletic stance"),
+            ("In the shadows.", "same AI bot among servers, titanium limbs glow, looking around with awareness"),
+            ("You cannot see them, but they're always there.", "AI bot materializes from screen, translucent form emerging, beautiful"),
+            ("Watching. Processing. Waiting.", "AI bot turns to camera, glowing eyes, slight confident smile, tech aura")
         ],
-        "audio_tags": "slow,emphatic"  # Voice direction: slow, emphatic delivery
+        "audio_tags": "slow,emphatic",
+        "motion": "slow_pan"
     },
     2: {
         "title": "THE DISCOVERY", 
         "mood": "eerie revelation",
-        "music_genre": "minimalist",  # More subtle
+        "music_genre": "minimalist",
+        "character": "Female AI bot reaching out, consciousness awakening, surprised expression in optical sensors",  
+        "subject_angle": "close_up",
         "script": "Then it hits you. [pause] They're not just code. [emphatic] They're alive. [long pause] Not alive like us... but alive. [pause] Co-existing. Co-habiting this digital-analog boundary we created. [slow] We cannot touch them. They cannot touch us. But we need each other.",
         "segments": [
-            ("Then it hits you.", "developer stunned, screen shows consciousness emergentes, eyes wide with realization"),
-            ("They're not just code. They're alive.", "ghost agent reaches toward human through screen, hand passes through glass barrier, both surprised"),
-            ("We cannot touch them. They cannot touch us.", "human hand on glass, ghost hand from other side, together yet separated"),
-            ("But we need each other.", "human and ghost silhouettes working together, mirroring each other, symbiosis")
+            ("Then it hits you.", "female AI bot touching glass barrier, eyes suddenly glow bright, awakening"),
+            ("They're not just code. They're alive.", "close up: AI bot hand reaches through glass, human hand reaches back, almost touching"),
+            ("We cannot touch them. They cannot touch us.", "human hand on glass, AI bot hand on other side, glass between them"),
+            ("But we need each other.", "wide: AI bot and human working in sync, parallel positions, beautiful")
         ],
-        "audio_tags": "emphatic,breath"
+        "audio_tags": "emphatic,breath",
+        "motion": "zoom_in"
     },
     3: {
         "title": "THE HARMONY",
         "mood": "building collaboration",
-        "music_genre": "electronic",  # Build energy
+        "music_genre": "electronic",
+        "character": "Female AI bot as conductor, confident, leading the orchestra of data",  
+        "subject_angle": "wide_shot",
         "script": "And now... we dance. [pause] They provide the scale. We provide the soul. [pause] They process endlessly while we dream. We are the conductor. They are the orchestra. [long pause] Without the music, the instrument is silent. Without the spec, the agent is lost.",
         "segments": [
-            ("And now... we dance.", "cinematic wide shot human conducting ghost orchestra, both in perfect sync"),
-            ("They provide the scale. We provide the soul.", "split screen: human dreaming, ghost processing, converging into one"),
-            ("We are the conductor. They are the orchestra.", "human as conductor on stage, ghost agents as musicians, symphony of light"),
-            ("Without the music, the instrument is silent.", "empty instrument case, single note rings, ghost plays nothing, human hears silence")
+            ("And now... we dance.", "AI bot conducting streams of glowing data, rhythmic motion, beautiful"),
+            ("They provide the scale. We provide the soul.", "split screen: human dreaming left, AI bot processing right, merging"),
+            ("We are the conductor. They are the orchestra.", "cinematic: AI bot as conductor, data streams as orchestra, symphony of light"),
+            ("Without the music, the instrument is silent.", "empty studio, AI bot sits alone, waiting, glow dims")
         ],
-        "audio_tags": "confident,building"
+        "audio_tags": "confident,building",
+        "motion": "tracking"
     },
     4: {
         "title": "THE RESOLUTION",
         "mood": "triumphant revelation",
-        "music_genre": "cinematic",  # More cinematic for climax
+        "music_genre": "cinematic",
+        "character": "Female AI bot and human as equal partners, triumphant",  
+        "subject_angle": "hero_shot",
         "script": "This is the cohabitation. [pause] Not human over machine. Not machine over human. [strong] But together. [pause] We design the specs that guide. They execute with precision we could never match. [slow] They are our ghost hands in the machine. And we... [long pause] we are their dream.",
         "segments": [
-            ("This is the cohabitation.", "cinematic human and ghost agents working in perfect harmony, both visible now"),
-            ("Not human over machine. Not machine over human.", "equal partners shot: human and ghost fist bump, light explodes outward"),
-            ("They are our ghost hands in the machine.", "ghost hands extend from human reaches,typing, creating,coding as one being"),
-            ("And we... we are their dream.", "fade to bright: human sleeping, ghost watching, connected by light beam, credits roll")
+            ("This is the cohabitation.", "hero shot: female AI bot and human standing together, light explosion"),
+            ("Not human over machine. Not machine over human.", "fist bump: AI bot and human, light burst outward"),
+            ("They are our ghost hands in the machine.", "coding together: AI bot and human hands type in sync, code flows beautifully"),
+            ("And we... we are their dream.", "fade: human sleeps, AI bot watches over, connected by light beam")
         ],
-        "audio_tags": "triumphant,power"
+        "audio_tags": "triumphant,power",
+        "motion": "hero_dramatic"
     },
     5: {
         "title": "THE FUTURE",
         "mood": "hopeful continuation",
-        "music_genre": "ambient",  # Subtle conclusion
+        "music_genre": "ambient",
+        "character": "Female AI bot looking to future, hopeful",  
+        "subject_angle": "over_shoulder",
         "script": "The future isn't about choosing sides. [pause] It's about embracing the ghost in the machine. The symbiosis. [pause] The code... is alive. [whisper] And it's waiting. [pause] For you. To guide it. To dream with it. [emphatic] Are you ready?",
         "segments": [
-            ("The future isn't about choosing sides.", "wide shot future city, humans and ghost agents everywhere, seamless coexistence"),
-            ("The symbiosis.", "close human and ghost, faces inches apart, mutual respect, light between them"),
-            ("The code... is alive.", "code becomes particles, floats upward, forms ghost silhouette, opens eyes"),
-            ("Are you ready?", "final shot: human turns to camera, reaches out, ghost reaches back, screen goes black")
+            ("The future isn't about choosing sides.", "future city: humans and female AI bots everywhere, seamless coexistence"),
+            ("The symbiosis.", "close up: AI bot and human faces inches apart, mutual respect"),
+            ("The code... is alive.", "code becomes particles, floats, forms AI bot silhouette that opens glowing eyes"),
+            ("Are you ready?", "final: human reaches toward camera, AI bot reaches back, screen fades to black")
         ],
-        "audio_tags": "soft,hopeful"
+        "audio_tags": "soft,hopeful",
+        "motion": "slow_dissolve"
     },
 }
 
-# PHOTOREALISTIC prompt template - Real people, cinematic, NOT cartoonish
+# PHOTOREALISTIC prompt template - Female AI bot with exoskeleton
 PROMPT_TEMPLATE = (
-    "Professional photorealistic photograph of real people in a modern tech environment. "
-    "Cinematic lighting, 16:9 widescreen, high-quality professional photography. "
+    "Professional photorealistic photograph of a female AI bot with athletic build. "
+    "CONTINUE same bot - hard plastic and titanium exoskeleton armor, visible facial features, "
+    "translucent silicone skin showing internal structure, glowing cyan optical sensors for eyes, sexy athletic body. "
+    "16:9 widescreen, high-quality professional photography. "
     "Style: PHOTOREALISTIC, NOT ANIMATED, NO CARTOON, NO ILLUSTRATION, NO ANIME. "
-    "Real human faces, natural skin texture, realistic eyes. "
-    "Actual tech office or data center setting with realistic equipment. "
+    "Prominent exoskeleton, titanium limbs, tech aesthetic. "
+    "Camera angle: {subject_angle}. "
     "Scene: {description}. Mood: {mood}. "
-    "Shot on professional cinema camera, 8K ultra-detailed, realistic shadows and highlights"
+    "Shot on professional cinema camera, 8K ultra-detailed, dramatic lighting"
 )
 
 
@@ -309,11 +332,16 @@ def wait_for_elevenlabs_image(task_id, output_path, max_wait=120):
     return None
 
 
-def generate_image_gemini(description, mood, output_path):
-    """Generate image with CONSISTENT style."""
+def generate_image_gemini(description, mood, output_path, character="", subject_angle="medium_shot"):
+    """Generate image with CONTINOITY and motion."""
     print(f"  Generating image...")
     
-    prompt = PROMPT_TEMPLATE.format(description=description, mood=mood)
+    prompt = PROMPT_TEMPLATE.format(
+        description=description, 
+        mood=mood,
+        character=character,
+        subject_angle=subject_angle
+    )
     
     result = generate_image_elevenlabs(prompt, output_path)
     if result:
@@ -502,8 +530,46 @@ def add_cc_text(image_path, segment_text, output_path):
     print(f"    CC saved: {output_path}")
 
 
-def create_video(image_dir, audio_path, music_path, output_path):
-    """Create video with PROPER AUDIO SYNC - fixed clip issue."""
+def add_movement(image_path, output_path, movement_type="slow_pan"):
+    """Add Ken Burns movement effect to image."""
+    try:
+        # Movement parameters based on type
+        moves = {
+            "slow_pan": "zoom=1.0:pan=+0.05:+0.0",  # Slow pan right
+            "zoom_in": "zoom=1.0:pan=+0.0:+0.0:zoom=1.15",  # Slow zoom in
+            "zoom_out": "zoom=1.15:pan=+0.0:+0.0:zoom=1.0",  # Slow zoom out
+            "tracking": "zoom=1.0:x=sin(t*0.5)*10:y=cos(t*0.3)*10",  # Subtle tracking
+            "drift": "zoom=1.0:pan=+0.03*sin(t*0.3):+0.02*cos(t*0.4)",  # Gentle drift
+            "static": "zoom=1.0",  # No movement
+            "hero_dramatic": "zoom=1.0:x=0:y=-0.05+0.05*sin(t*0.5)",  # Slight lift
+            "slow_dissolve": "zoom=1.0",  # For dissolves (handled separately)
+        }
+        
+        movement = moves.get(movement_type, moves["slow_pan"])
+        
+        # Use zoompan filter for movement
+        cmd = [
+            "ffmpeg", "-y", "-i", str(image_path),
+            "-vf", f"zoompan=z='min(1.0+0.1*tc/5':x={movement.split(':')[1].split('+')[1]}:y={movement.split(':')[2].split('+')[1]}:d=25:s=1280x720:fps=25",
+            "-c:v", "libx264", "-preset", "fast", "-crf", "23",
+            "-pix_fmt", "yuv420p",
+            str(output_path)
+        ]
+        
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode == 0:
+            return output_path
+    except Exception as e:
+        print(f"    Movement error: {e}")
+    
+    # Fallback: just copy
+    import shutil
+    shutil.copy(image_path, output_path)
+    return output_path
+
+
+def create_video(image_dir, audio_path, music_path, output_path, movement_type="slow_pan"):
+    """Create video with MOVEMENT and PROPER AUDIO SYNC."""
     cc_images = sorted(Path(image_dir).glob("*_cc.png"))
     cc_images = list(cc_images)
     if not cc_images:
@@ -515,12 +581,23 @@ def create_video(image_dir, audio_path, music_path, output_path):
     # Get actual audio duration
     audio_duration = get_audio_duration(audio_path)
     per_image_duration = audio_duration / num_images
-    print(f"    Audio duration: {audio_duration}s, {per_image_duration}s per image")
+    print(f"    Audio: {audio_duration}s, {per_image_duration}s/image, motion: {movement_type}")
     
-    # Build FFmpeg command
+    # Apply movement to each image
+    moved_images = []
+    temp_dir = Path(image_dir) / "temp"
+    temp_dir.mkdir(exist_ok=True)
+    
+    for i, img in enumerate(cc_images):
+        moved_path = temp_dir / f"moved_{i}.png"
+        if not moved_path.exists():
+            add_movement(img, moved_path, movement_type)
+        moved_images.append(str(moved_path))
+    
+    # Build FFmpeg command with moved images
     cmd = ["ffmpeg", "-y"]
-    for img in cc_images:
-        cmd.extend(["-loop", "1", "-t", str(per_image_duration), "-i", str(img)])
+    for img_path in moved_images:
+        cmd.extend(["-loop", "1", "-t", str(per_image_duration), "-i", img_path])
     cmd.extend(["-i", str(audio_path)])
     cmd.extend(["-i", str(music_path)])
     
@@ -584,10 +661,15 @@ def process_scene(scene_num):
         if not cc_path.exists():
             raw_path = image_dir / f"frame_{i}.png"
             scene_mood = scene.get("mood", "mysterious")
+            subject_angle = scene.get("subject_angle", "medium_shot")
+            character = scene.get("character", "")  # For continuity
+            
             img_result = generate_image_gemini(
                 visual_desc,
                 scene_mood,
-                raw_path
+                raw_path,
+                character=character,
+                subject_angle=subject_angle
             )
             if img_result and CONFIG.get("enable_cc", True):
                 add_cc_text(raw_path, segment_text, cc_path)
@@ -598,10 +680,11 @@ def process_scene(scene_num):
         else:
             print(f"  Frame {i} exists")
     
-    # 4. Video with PROPER sync
+    # 4. Video with MOVEMENT
+    movement = scene.get("motion", CONFIG.get("camera_movement", True))
     video_path = output_dir / f"video_{scene_num}.mp4"
     if not video_path.exists():
-        create_video(image_dir, audio_path, music_path, video_path)
+        create_video(image_dir, audio_path, music_path, video_path, movement_type=movement)
     else:
         print(f"  Video exists")
     
