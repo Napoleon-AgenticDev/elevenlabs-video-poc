@@ -1,0 +1,19 @@
+1
+00:00:00,200 --> 00:00:02,000
+Three companies cracked the code.
+
+2
+00:00:02,500 --> 00:00:06,000
+OpenAI generated ONE MILLION lines of code.
+
+3
+00:00:06,500 --> 00:00:10,000
+LangChain improved by fourteen percentage points.
+
+4
+00:00:10,500 --> 00:00:14,000
+Anthropic solved with feature lists and progress tracking.
+
+5
+00:00:14,500 --> 00:00:18,000
+Self-verification before exit. Incremental progress.

@@ -1,0 +1,19 @@
+1
+00:00:00,200 --> 00:00:02,000
+The future isn't about writing more code.
+
+2
+00:00:02,500 --> 00:00:05,500
+It's about creating better specifications.
+
+3
+00:00:06,000 --> 00:00:09,000
+Better feedback loops. Better harnesses.
+
+4
+00:00:09,500 --> 00:00:13,000
+Start with your environment. Add observability.
+
+5
+00:00:13,500 --> 00:00:16,000
+Are you ready to guide them?
