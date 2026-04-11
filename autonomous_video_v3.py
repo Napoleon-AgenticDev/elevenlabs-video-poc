@@ -34,6 +34,7 @@ VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "sp8CrAP79SOncD3rShle")
 GEMINI_MODEL = "gemini-2.5-flash-image"
 GEMINI_VIDEO_MODEL = "veo-3.1-generate-preview"
 USE_VIDEO_GEN = os.getenv("USE_VIDEO_GEN", "false").lower() == "true"
+VIDEO_MODEL = os.getenv("VIDEO_MODEL", "kling")  # kilo, veo, kling-3-0-pro, etc
 
 # CINEMATIC STORY ARC - Emotional journey: Tension → Stress → Revelation → Harmony → Resolution
 # Theme: Analog → Digital transformation, symbiotic coexistence, ghost agents
@@ -273,6 +274,79 @@ def generate_video_veo(image_path, prompt, output_path):
             return output_path
     except Exception as e:
         print(f"    Video error: {e}")
+    
+    return None
+
+
+def generate_video_kling(image_path, motion_prompt, output_path, duration=5):
+    """Generate video from image using ElevenLabs Kling API."""
+    global ELEVENLABS_KEY
+    if not ELEVENLABS_KEY:
+        print(f"    Kling not available - no API key")
+        return None
+    
+    try:
+        print(f"  Generating video with Kling...")
+        
+        url = "https://api.elevenlabs.io/v1/image/video/generate"
+        headers = {
+            "xi-api-key": ELEVENLABS_KEY,
+            "Content-Type": "application/json"
+        }
+        
+        with open(image_path, "rb") as f:
+            image_b64 = base64.b64encode(f.read()).decode()
+        
+        data = {
+            "image_url": f"data:image/png;base64,{image_b64}",
+            "prompt": motion_prompt,
+            "model": "kling-2.6",
+            "duration": duration,
+            "resolution": "1080p",
+            "aspect_ratio": "16:9"
+        }
+        
+        response = requests.post(url, json=data, headers=headers, timeout=120)
+        
+        if response.status_code == 200:
+            result = response.json()
+            video_url = result.get("generated_video_url") or result.get("video_url")
+            if video_url:
+                import urllib.request
+                urllib.request.urlretrieve(video_url, output_path)
+                print(f"    Video saved: {output_path}")
+                return output_path
+            elif result.get("task_id"):
+                task_id = result["task_id"]
+                print(f"    Kling task: {task_id} (polling...)")
+                return wait_for_klingVideo(task_id, output_path)
+        print(f"    Kling error: {response.status_code} - {response.text[:100]}")
+    except Exception as e:
+        print(f"    Video error: {e}")
+    
+    return None
+
+
+def wait_for_kling_video(task_id, output_path, max_wait=180):
+    """Poll for Kling video completion."""
+    import time
+    url = f"https://api.elevenlabs.io/v1/image/video/tasks/{task_id}"
+    headers = {"xi-api-key": ELEVENLABS_KEY}
+    
+    for _ in range(max_wait // 10):
+        time.sleep(10)
+        resp = requests.get(url, headers=headers)
+        if resp.status_code == 200:
+            result = resp.json()
+            status = result.get("status")
+            if status == "completed":
+                video_url = result.get("generated_video_url") or result.get("video_url")
+                if video_url:
+                    import urllib.request
+                    urllib.request.urlretrieve(video_url, output_path)
+                    return output_path
+            elif status in ["failed", "error"]:
+                break
     
     return None
 
