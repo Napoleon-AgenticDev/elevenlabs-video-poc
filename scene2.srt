@@ -1,0 +1,15 @@
+1
+00:00:00,140 --> 00:00:01,959
+What if there was a better way?
+
+2
+00:00:02,539 --> 00:00:08,898
+What if instead of writing every line of code you could design the specifications that guide your AI?
+
+3
+00:00:09,579 --> 00:00:11,759
+Enter, harness engineering.
+
+4
+00:00:12,359 --> 00:00:21,798
+It's not about programming the AI directly. It's about creating environments, specifications, and feedback loops that let agents do reliable work.

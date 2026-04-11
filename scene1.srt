@@ -1,0 +1,19 @@
+1
+00:00:00,199 --> 00:00:01,959
+Every developer knows this feeling.
+
+2
+00:00:02,539 --> 00:00:07,099
+You're building an AI system, and it starts spiraling out of control.
+
+3
+00:00:08,058 --> 00:00:09,319
+Code everywhere.
+
+4
+00:00:09,939 --> 00:00:12,198
+No direction. Tests failing.
+
+5
+00:00:12,698 --> 00:00:13,439
+Sound familiar?
