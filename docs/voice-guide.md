@@ -6,144 +6,157 @@ Think of these like different characters in a movie. Each one has their own pers
 
 ## The Voices in Our Project
 
-### Brittney (kPzsL2i3teMYv0FxEYQ6) ⭐ PRIMARY
+### Brittney (kPzsL2i3teMYv0FxEYQ6) ⭐ PRIMARY - RECOMMENDED
 - **Personality:** Fun, youthful, informative
 - **Sounds like:** That friend who always tells you about cool new stuff
 - **Best for:** YouTube videos, social media, educational content
 - **Vibe:** Energetic and friendly!
 
-**Example:** "Hey guys! Today we're going to talk about something super cool..."
+**Why Brittney?** She's optimized for our video scripts with perfect expression of Audio Tags!
 
 ---
 
-### George (JBFqnCBsd6RMkjVDRZzb)
-- **Personality:** Warm, captivating storyteller
-- **Sounds like:** A grandpa telling stories by the fireplace
-- **Best for:** Narratives, stories, explainer videos
-- **Vibe:** Comforting and engaging!
+## ✨ NEW: ElevenLabs v3 Audio Tags
 
-**Example:** "Once upon a time, in a land far away..."
+This is the SECRET SAUCE for spectacular videos! Audio Tags make AI voice sound like a REAL person with emotions!
 
----
+### What Are Audio Tags?
 
-### Sarah (EXAVITQu4vr4xnSDxMaL)
-- **Personality:** Mature, reassuring, confident
-- **Sounds like:** A professional news anchor or teacher
-- **Best for:** Business videos, tutorials, presentations
-- **Vibe:** Professional and trustworthy!
+Put tags in square brackets `[]` anywhere in your script to control:
+- 🎭 Emotions
+- ⏸️ Pauses
+- 🔊 Volume
+- ⚡ Speed
 
-**Example:** "In today's lesson, we will cover the fundamentals of..."
+### Complete Audio Tags Reference
 
----
+#### 🎭 Emotion Tags
+| Tag | When to Use | Example |
+|-----|-------------|---------|
+| `[sad]` | Sad, somber moments | "It failed again [sad]" |
+| `[angry]` | Frustrated, upset | "Tests failing [angry]!" |
+| `[happily]` | Happy, excited | "We did it [happily]!" |
+| `[sorrowful]` | Deep sadness | "The code was lost [sorrowful]" |
+| `[excited]` | Very enthusiastic | "ONE MILLION lines [excited]!" |
+| `[emphatic]` | Strong emphasis | "The SECRET [emphatic] is..." |
 
-### Roger (CwhRBWXzGAHq8TQ4Fs17)
-- **Personality:** Laid-back, casual, resonant
-- **Sounds like:** That chill friend who's always relaxed
-- **Best for:** Podcasts, casual content, comedy
-- **Vibe:** Easy-going and relatable!
+#### 🔊 Volume/Delivery Tags
+| Tag | When to Use | Example |
+|-----|-------------|---------|
+| `[shouts]` | Louder, shouted | "CODE EVERYWHERE [shouts]!" |
+| `[whispers]` | Quiet, secretive | "Not about coding directly [whispers]" |
+| `[softly]` | Gentle delivery | "peaceful solution [softly]" |
+| `[loud]` | Very loud | "[loud] BREAKTHROUGH!" |
+| `[quiet]` | Very quiet | "[quiet] top secret" |
 
-**Example:** "So yeah, I was thinking about this the other day..."
+#### ⏸️ Pause Tags (v3 Only!)
+| Tag | Effect | Example |
+|-----|--------|---------|
+| `[pause]` | Natural pause | "Hello [pause] world" |
+| `[short pause]` | Brief pause | "Wait [short pause] what?" |
+| `[long pause]` | Extended pause | "The answer is... [long pause] YES" |
+| `[dramatic]` | Theatrical pause | "[dramatic] and then..." |
 
----
+#### ⚡ Speed Tags
+| Tag | Effect | Example |
+|-----|--------|---------|
+| `[slow]` | Slower pace | "Carefully [slow] analyze" |
+| `[fast]` | Faster pace | "Quickly [fast] fix this" |
+| `[rushed]` | Very fast | "[rushed] finish now" |
+| `[drawn out]` | Extended vowels | "Sooo [drawn out] cooool" |
 
-### Matilda (XrExE9yKIg1WjnnlVkGX)
-- **Personality:** Knowledgeable, professional
-- **Sounds like:** A smart professor who knows everything
-- **Best for:** Educational content, documentaries, non-fiction
-- **Vibe:** Smart and authoritative!
+#### 🎬 Special Tags
+| Tag | Effect | Example |
+|-----|--------|---------|
+| `[sighs]` | Sighing sound | "[sighs] finally done" |
+| `[laughs]` | Laughter | "[laughs] so funny!" |
+| `[clears throat]` | Throat clear | "[clears throat] excuse me" |
+| `[coughs]` | Cough | "[coughs] pardon me" |
 
-**Example:** "The research indicates that..."
+### Example Script with All Tags
 
----
+```python
+SCENE_1 = """
+Every developer knows [emphatic] this feeling [long pause] 
 
-### Adam (pNInz6obpgDQGcFmaJgB)
-- **Personality:** Dominant, firm
-- **Sounds like:** A strong leader or boss
-- **Best for:** Action content, sports, dramatic moments
-- **Vibe:** Powerful and commanding!
+You're building an AI system... 
+and it starts spiraling OUT OF CONTROL [shouts] [long pause] 
 
-**Example:** "This is how we get it done!"
+Code EVERYWHERE [excited] [short pause] 
+No direction [slow] [pause] 
+Tests failing [emphatic] [short pause] 
 
----
-
-## How to Pick the Right Voice
-
-Ask yourself these questions:
-
-| Question | Best Voice |
-|----------|-------------|
-| Is it fun/social media? | Brittney |
-| Is it a story? | George |
-| Is it professional? | Sarah |
-| Is it casual/chill? | Roger |
-| Is it educational? | Matilda |
-| Is it action/dramatic? | Adam |
+Sound familiar? [emphatic] [short pause]
+"""
+```
 
 ## Voice Settings Deep Dive 🎛️
 
-You can make each voice sound different by changing settings:
+### For Maximum Expression (SPECTACULAR Videos)
 
-### Stability (0.0 - 1.0)
-- **Low (0.1-0.3):** More emotional, varies more
-- **Medium (0.4-0.6):** Balanced
-- **High (0.7-1.0):** Very consistent, robotic
-
-**Recommended:** 0.4 for videos, 0.7 for consistent narration
-
-### Similarity Boost (0.0 - 1.0)
-- **Low:** More unique interpretation
-- **High:** Sticks closer to original voice
-
-**Recommended:** 0.8 for most videos
-
-### Style (0.0 - 1.0)
-- **Low:** Neutral, plain reading
-- **High:** Very expressive, emotional
-
-**Recommended:** 0.2 for narrator, 0.5 for dramatic
-
-### Speed (0.5 - 2.0)
-- **0.5:** Half speed (slow)
-- **1.0:** Normal speed
-- **2.0:** Double speed (fast)
-
-**Recommended:** 1.0 for most content, 0.95 for formal
-
-## Preset Combinations
-
-We made some ready-to-use settings in `config.py`:
+Use these settings for drama and emotion:
 
 ```python
 VOICE_SETTINGS = {
-    "default": {"stability": 0.5, "similarity_boost": 0.75},
-    "narrator": {"stability": 0.4, "similarity_boost": 0.8, "style": 0.2},
-    "energetic": {"stability": 0.3, "similarity_boost": 0.9, "style": 0.5},
-    "calm": {"stability": 0.7, "similarity_boost": 0.6}
+    "stability": 0.25,      # Very low = more expression!
+    "similarity_boost": 0.9,  # High = sounds like original voice
+    "style": 0.5,            # High = emotional range
+    "speed": 1.0
 }
 ```
 
-## Using Different Voices in Code
+### Stability (0.0 - 1.0)
+- **Low (0.1-0.3):** ⭐ More emotional, varies more - USE FOR DRAMA
+- **Medium (0.4-0.6):** Balanced
+- **High (0.7-1.0):** Very consistent, robotic
+
+### Similarity Boost (0.0 - 1.0)
+- **Low:** More unique interpretation
+- **High:** ⭐ Sticks closer to original voice - USE 0.8-0.9
+
+### Style (0.0 - 1.0) - v3 Only!
+- **Low:** Neutral, plain reading
+- **High:** ⭐ Very expressive, emotional - USE 0.3-0.5 FOR DRAMA
+
+## How to Pick the Right Voice
+
+| Scenario | Best Voice | Audio Tags |
+|----------|------------|------------|
+| Social media, fun | Brittney ⭐ | [excited], [shouts] |
+| Story, narrative | George | [slow], [dramatic] |
+| Professional, business | Sarah | [emphatic], [pause] |
+| Casual, podcast | Roger | [softly], [laughs] |
+| Educational | Matilda | [clear], [emphatic] |
+| Action, dramatic | Adam | [shouts], [excited] |
+
+## Using in Code
 
 ### Python:
 ```python
 from config import get_voice
 
-# Get ID by name
 voice_id = get_voice("brittney")  # Returns "kPzsL2i3teMYv0FxEYQ6"
-
-# Or use directly
-voice_id = "kPzsL2i3teMYv0FxEYQ6"
 ```
 
 ### Command Line:
 ```bash
-python generate_audio.py --text "Hello!" --voice brittney
-python generate_audio.py --text "Hello!" --voice george
-python generate_audio.py --text "Hello!" --voice sarah
+python generate_spectacular_audio.py --scene 1
+python generate_spectacular_audio.py --all
 ```
 
 ---
 
-**Now you're a voice expert!** 
+## Pro Tips for Spectacular Audio
 
-Check out [Troubleshooting](troubleshooting.md) if you run into any problems! 🔧
+1. **Use [emphatic]** on key stats and numbers
+2. **Use [long pause]** before reveals
+3. **Use [shouts]** for dramatic emphasis
+4. **Use [whispers]** for confidential info
+5. **Lower stability (0.25)** = more expression
+6. **Higher style (0.5)** = more emotion
+
+---
+
+**Now you're ready to make SPECTACULAR videos!** 
+
+Check out [video-script-guide.md](video-script-guide.md) for writing scripts with expression! 🚀

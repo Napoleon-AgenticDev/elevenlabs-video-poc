@@ -2,141 +2,179 @@
 
 ## What's a Video Script?
 
-A video script is like a blueprint for your video. It tells you:
-- What to say
-- When to say it
-- What pictures to show
+A video script is a blueprint for your video:
+- **What to say** (the words)
+- **How to say it** (expression with Audio Tags!)
+- **What pictures** to show
 
-## Our Script Structure
+## ✨ NEW: Writing with Audio Tags
 
-We have 5 scenes that tell a story:
+The secret to SPECTACULAR videos is adding expression to your script!
+
+### Audio Tags in Your Script
+
+```python
+SCENE_1_TEXT = """
+Every developer knows [emphatic] this feeling [long pause] 
+
+You're building an AI system... 
+and it starts spiraling OUT OF CONTROL [shouts] [long pause] 
+
+Code EVERYWHERE [excited] [short pause] 
+No direction [slow] [pause] 
+Tests failing [emphatic] [short pause] 
+
+Sound familiar? [emphatic] [short pause]
+"""
+```
+
+### Where to Put Tags
+
+| Tag Type | Where | Example |
+|----------|-------|---------|
+| `[emphatic]` | Key words/phrases | "The SECRET [emphatic]" |
+| `[shouts]` | Dramatic emphasis | "CODE [shouts]" |
+| `[pause]` | Between thoughts | "Hello [pause] world" |
+| `[long pause]` | Before reveal | "The answer is... [long pause]" |
+| `[whispers]` | Confidential | "Don't tell anyone [whispers]" |
+| `[excited]` | Big news | "We did it [excited]!" |
+| `[slow]` | Important info | "Listen [slow] carefully" |
+
+## Our 5-Scene Story Structure
+
+Each scene follows the Hero's Journey:
 
 ### Scene 1: The Problem
-**Goal:** Make the viewer think "That's me!"
+**Goal:** Make viewer think "That's me!"
 
-**Script:**
-> "Every developer knows this feeling. You're building an AI system, and it starts spiraling out of control. Code everywhere. No direction. Tests failing. Sound familiar?"
+```python
+text = """Every developer knows [emphatic] this feeling [long pause]
+You're building an AI system... and it starts spiraling OUT OF CONTROL [shouts]
+Code EVERYWHERE [excited] [pause]
+No direction [pause]
+Tests failing [emphatic]
+Sound familiar? [short pause]"""
+```
 
-**Purpose:** Start with a problem everyone relates to!
+**Image Prompt:** Dark void, chaotic code, red accents
 
 ---
 
 ### Scene 2: The Discovery
 **Goal:** Show there's a better way!
 
-**Script:**
-> "What if there was a better way? What if instead of writing every line of code, you could design the specifications that guide your AI? Enter... harness engineering. It's not about programming the AI directly. It's about creating environments, specifications, and feedback loops that let agents do reliable work."
+```python
+text = """What if there was [emphatic] a BETTER [excited] way? [pause]
+What if instead of writing every line of code [slow]
+you could design the SPECIFICATIONS [emphatic]
+that GUIDE your AI? [emphatic]
 
-**Purpose:** Introduce the solution!
+Enter... [dramatic] [long pause]
+HARNESS ENGINEERING [excited]"""
+```
+
+**Image Prompt:** Light revealing path, hope
 
 ---
 
 ### Scene 3: The Solution
-**Goal:** Explain how it works!
+**Goal:** Explain with proof!
 
-**Script:**
-> "Three companies cracked the code. OpenAI generated ONE MILLION lines of code with just 3 engineers. LangChain improved their agent by 14 percentage points - from 52.8% to 66.5% - just by changing the harness, not the model. Anthropic solved the long-running agent problem with feature lists and progress tracking. The secret? Self-verification before exit. Incremental progress over scope. Context that the agent can actually see."
+```python
+text = """THREE [shouts] companies cracked the CODE [excited]
 
-**Purpose:** Give proof and details!
+OpenAI [emphatic] generated ONE MILLION [emphatic]
+lines of code with just THREE [emphatic] engineers
+
+LangChain improved by FOURTEEN PERCENTAGE POINTS [shouts] [pause]
+The SECRET? [dramatic] [long pause]
+Self-verification BEFORE exit [emphatic]"""
+```
+
+**Image Prompt:** Three pillars, structure
 
 ---
 
 ### Scene 4: The Impact
 **Goal:** Show real results!
 
-**Script:**
-> "The results speak for themselves. OpenAI reached level 4 autonomy - agents that can go from prompt to PR with minimal human input. LangChain's sandwich approach - xhigh reasoning for planning, high for implementation, xhigh for verification - boosted performance by nearly 14 points. The shift? Humans don't write code anymore. They design systems. They steer. Agents execute."
+```python
+text = """The RESULTS [shouts] speak for themselves [emphatic] [pause]
 
-**Purpose:** Make it real with numbers!
+OpenAI reached LEVEL FOUR AUTONOMY [excited] [pause]
+
+The SHIFT? [dramatic] [long pause]
+Humans don't write code anymore [emphatic]
+AGENTS EXECUTE [shouts]"""
+```
+
+**Image Prompt:** Rocket ascending, success
 
 ---
 
 ### Scene 5: The Future
 **Goal:** Call to action!
 
-**Script:**
-> "The future of development isn't about writing more code. It's about creating better specifications. Better feedback loops. Better harnesses. Start with your environment. Add observability. Enforce verification. The agents are waiting. Are you ready to guide them?"
+```python
+text = """The future isn't about WRITING more code [emphatic]
 
-**Purpose:** Get the viewer to act!
+It's about creating BETTER specifications [pause]
+BETTER feedback loops [pause]
+BETTER harnesses [emphatic]
+
+The agents are WAITING [long pause]
+Are you READY [shouts] to GUIDE them? [emphatic]"""
+```
+
+**Image Prompt:** Horizon, sunrise, future
 
 ---
 
-## Story Structure (The Hero's Journey)
-
-This follows a classic storytelling pattern:
+## Story Structure
 
 ```
 PROBLEM → DISCOVERY → SOLUTION → IMPACT → FUTURE
-    ↓          ↓           ↓         ↓        ↓
-  Hook      Idea        Proof     Results   Action
+   ↓          ↓           ↓         ↓        ↓
+ Hook      Idea        Proof     Results   Action
 ```
 
 ### Why This Works:
+1. **Start with pain** - Everyone relates
+2. **Offer hope** - Better way exists!
+3. **Show proof** - Real companies, numbers
+4. **Make it real** - Impactful results
+5. **Call to action** - What to do next
 
-1. **Start with pain** - Everyone understands frustration
-2. **Offer hope** - There's a better way!
-3. **Show evidence** - Real companies, real results
-4. **Make it real** - Numbers and facts
-5. **Call to action** - What should they do next?
+## Writing Tips
 
-## Making Your Own Script
+✅ **Use [emphatic]** on key stats/numbers
+✅ **Use [long pause]** before reveals
+✅ **Use [shouts]** for dramatic emphasis
+✅ **Use [whispers]** for confidential
+✅ **Keep under 30 seconds** per scene
+✅ **End with question** for engagement
 
-### Step 1: Pick Your Topic
-What's your video about? (Ours: "Harness Engineering")
+❌ **Don't over-tag** - Every word doesn't need it
+❌ **Don't forget pauses** - They're powerful!
+❌ **Don't make it too long** - Keep it tight
 
-### Step 2: Find the Problem
-What problem does your audience have?
+---
 
-### Step 3: Find the Solution
-What's the answer to that problem?
-
-### Step 4: Add Proof
-Who used this solution and got results?
-
-### Step 5: Call to Action
-What should the viewer do next?
-
-## Script Format
-
-We use a simple format:
-
-```markdown
-## Scene 1: [Title]
-
-**Text:** "[What to say]"
-
-**Image idea:** [What picture to show]
-```
-
-## Creating Video from Script
-
-Our `create_video.py` script connects scenes to files:
+## Script Format Template
 
 ```python
 SCENES = {
-    "scene1": {
-        "audio": "brittney_scene1.mp3",
-        "image": "scene1_chaos.png",
-        "title": "The Problem"
+    1: {
+        "title": "Scene Name",
+        "text": """Your script here with [Audio Tags]""",
+        "image_prompt": "Description for AI image generator"
     },
     # ... more scenes
 }
 ```
 
-## Tips for Good Scripts
-
-✅ Keep sentences short
-✅ Use active words (don't write "is being done", write "does")
-✅ Ask questions to engage the viewer
-✅ Use numbers for credibility
-✅ End with a question or call to action
-
-❌ Don't use too much jargon
-❌ Don't make it too long
-❌ Don't forget the hook
-
 ---
 
-**Now write your own script!** 
+**Now write your own SPECTACULAR script!** 
 
-Need help? Check out [How It Works](how-it-works.md) for more context! 🎬
+Check out [voice-guide.md](voice-guide.md) for the complete Audio Tags reference! 🎤

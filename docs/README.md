@@ -1,95 +1,142 @@
 # Welcome to the ElevenLabs Video POC! 📺
 
-This project shows you how to use AI to make videos with cool voices!
+This project shows you how to use AI to make SPECTACULAR videos with AI voices and images!
 
 ## What's This About?
 
-Imagine you want to make a YouTube video or Instagram Reel, but you don't want to record your voice. This project lets you type what you want to say, and the computer reads it out loud in a really nice voice!
+Imagine you want to make a YouTube video or Instagram Reel, but you don't want to record your voice or create images. This project does it ALL with AI:
+- **AI Voice** - Type what you want, it talks with EXPRESSION
+- **AI Images** - Describe what you want, it generates cinematic images
+- **Video** - Combines everything into a real video!
 
-We use something called **ElevenLabs** - it's like a super smart robot that can talk like a human!
+We use:
+- **ElevenLabs v3** - The most expressive AI voice with Audio Tags
+- **OpenAI GPT Image** - AI-generated cinematic images
+- **FFmpeg** - Video compilation
 
 ## What Can You Do With This?
 
 ✅ **Make videos with AI voices** - Just type, and it talks!
-✅ **Create multi-voice conversations** - Two different voices talking to each other
-✅ **Choose different voices** - Fun voice, serious voice, friendly voice, and more!
-✅ **Make social media videos** - Perfect for YouTube, Instagram, TikTok
+✅ **Add voice inflections** - Use [shouts], [whispers], [emphatic] for drama
+✅ **Generate AI images** - Describe your scene, get a cinematic image
+✅ **Create full videos** - Audio + images + text = professional video
+✅ **Multi-voice dialogue** - Two or more AI voices talking
 
-## Quick Start (5 Minutes!)
+## Quick Start (10 Minutes!)
 
-### Step 1: Get Your Magic Key
-You need a special password (called an API key) to use ElevenLabs. Ask your teacher or parent to help you get one from [elevenlabs.io](https://elevenlabs.io)!
+### Step 1: Get Your Magic Keys
+You need two API keys:
+- **ElevenLabs** - Get from [elevenlabs.io/app/api](https://elevenlabs.io/app/api)
+- **OpenAI** - Get from [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 
-### Step 2: Install the Stuff
+### Step 2: Set Up
 ```bash
-pip install requests
+# Create .env file with your keys
+ELEVENLABS_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
 ```
 
-### Step 3: Make Your First Sound!
+### Step 3: Generate Spectacular Audio!
 ```bash
-python generate_audio.py --text "Hello world!" --voice brittney --output hello.mp3
+# Creates audio with dramatic voice inflections
+python generate_spectacular_audio.py
 ```
 
-And that's it! You just made a talking sound! 🎉
+### Step 4: Generate Images
+```bash
+# Creates cinematic AI images
+python generate_images.py --all
+```
+
+### Step 5: Create Video
+```bash
+# Combines audio + images + text into video
+ffmpeg -loop 1 -i scene1_with_text.png -i audio.mp3 -shortest output.mp4
+```
 
 ## The Files in This Project
 
 | File | What It Does |
 |------|--------------|
-| `config.py` | Holds all the voice settings and magic keys |
-| `generate_audio.py` | The tool that makes the talking sounds |
-| `create_video.py` | Turns sounds into actual videos |
-| `video-script.md` | The story we tell in our video |
-| `docs/` | All the explanations (you're reading one now!) |
+| `config.py` | Holds all settings, voices, API keys |
+| `generate_spectacular_audio.py` | ⭐ Audio with voice inflections (v3 Audio Tags) |
+| `generate_images.py` | ⭐ AI image generation with OpenAI |
+| `generate_enhanced_audio.py` | Audio with expressive tags |
+| `create_video.py` | Turns everything into video |
+| `SKILL.md` | 📚 Complete skill for AI agents |
+| `video-script-enhanced.md` | Example script with Audio Tags |
+| `image-prompts.md` | Cinematic image prompts |
+| `docs/` | All the explanations |
+
+## ✨ New: Audio Tags (v3 Expressive Voice)
+
+Add DRAMA to your voice with these tags:
+
+| Tag | Example |
+|-----|---------|
+| `[shouts]` | "CODE EVERYWHERE [shouts]" |
+| `[whispers]` | "It's not about programming directly [whispers]" |
+| `[emphatic]` | "The SECRET is [emphatic] self-verification" |
+| `[excited]` | "ONE MILLION lines [excited] with 3 engineers!" |
+| `[long pause]` | "The shift? [long pause] Humans don't write code anymore" |
+| `[sighs]` | "It started spiraling out of control [sighs]" |
+| `[slow]` | "...into the darkness [slow]" |
+
+**Full list in:** [Voice Guide](voice-guide.md)
 
 ## Try It Out!
 
-### Make a voice say something:
+### Make a voice say something with expression:
 ```bash
-python generate_audio.py --text "I love making videos!" --output myvoice.mp3
+python generate_spectacular_audio.py --scene 1
 ```
 
-### List all the voices:
+### List all available voices:
 ```bash
 python generate_audio.py --list-voices
 ```
 
-### Make two voices talk:
+### Generate all 5 scenes:
 ```bash
-python generate_audio.py --dialogue --dialogue-input '[{"text":"Hello!","voice_id":"kPzsL2i3teMYv0FxEYQ6"},{"text":"Hi there!","voice_id":"JBFqnCBsd6RMkjVDRZzb"}]' --output conversation.mp3
+python generate_spectacular_audio.py --all
+```
+
+### Generate cinematic images:
+```bash
+python generate_images.py --all
 ```
 
 ## The Voices You Can Use
 
-| Voice Name | Sounds Like |
-|------------|-------------|
-| Brittney | Fun friend who tells you about stuff |
-| George | Storyteller who reads books |
-| Sarah | Professional news reporter |
-| Roger | Chill buddy hanging out |
-| Matilda | Smart teacher |
-| Adam | Boss who means business |
+| Voice Name | Sounds Like | Best For |
+|------------|-------------|----------|
+| Brittney ⭐ | Fun, youthful | Social media, vlogs |
+| George | Warm storyteller | Narratives |
+| Sarah | Professional | Business, tutorials |
+| Roger | Chill, casual | Podcasts |
+| Matilda | Knowledgeable | Educational |
+| Adam | Dominant | Action, drama |
 
 ## What's Next?
 
 Now that you know the basics, you can:
 
-1. 📝 **Write your own story** - Edit `video-script.md`
-2. 🎬 **Make a video** - Use `create_video.py`
-3. 🎨 **Add pictures** - Create images for each scene
+1. 📝 **Write your own story** - Edit scripts with Audio Tags
+2. 🎬 **Make a spectacular video** - Run generate_spectacular_audio.py
+3. 🎨 **Create AI images** - Use prompts from image-prompts.md
 4. 📱 **Share it!** - Post to YouTube or Instagram
+5. 🤖 **Use in AI agents** - Import SKILL.md into Claude/OpenCode
 
 ## Need Help?
 
-Check out these other documents in the `docs/` folder:
-
-- [How It Works](how-it-works.md) - Simple explanation of the technology
-- [API Guide](api-guide.md) - How to talk to ElevenLabs
-- [Voice Guide](voice-guide.md) - All about choosing voices
-- [Troubleshooting](troubleshooting.md) - What to do if something breaks
+- [How It Works](how-it-works.md) - Simple explanation
+- [API Guide](api-guide.md) - ElevenLabs & OpenAI APIs
+- [Voice Guide](voice-guide.md) - All about Audio Tags
+- [Video Script Guide](video-script-guide.md) - Writing with expression
+- [Troubleshooting](troubleshooting.md) - Fix common issues
 
 ---
 
-**Made with 💜 using ElevenLabs API**
+**Made with 💜 using ElevenLabs v3 + OpenAI GPT Image**
 
-Now go make something cool! 🚀
+Now go make something SPECTACULAR! 🚀

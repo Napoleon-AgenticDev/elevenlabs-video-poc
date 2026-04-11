@@ -1,42 +1,59 @@
 # API Guide 📡
 
-## What is an API?
+## Overview
 
-Think of an API like a telephone. You call a number (the API), say what you want (send your text), and get an answer back (the voice audio)!
+This project uses TWO powerful AI APIs:
 
-## The Two Main Ways to Make Voice
+| API | What It Does | Docs |
+|-----|--------------|------|
+| **ElevenLabs** | AI voice generation with Audio Tags | [elevenlabs.io/docs](https://elevenlabs.io/docs) |
+| **OpenAI** | AI image generation | [platform.openai.com/docs](https://platform.openai.com/docs) |
 
-### 1. Single Voice (Text to Speech)
+---
 
-One person talking. Like a podcast with one host!
+## Part 1: ElevenLabs API
 
-**The Phone Number (Endpoint):**
-```
-POST https://api.elevenlabs.io/v1/text-to-speech/{voice_id}
-```
+### Authentication
 
-**What You Say (Request):**
-```json
-{
-  "text": "Hello world!",
-  "voice_settings": {
-    "stability": 0.5,
-    "similarity_boost": 0.75
-  },
-  "model_id": "eleven_v3"
+```python
+# Header required for all requests
+headers = {
+    "xi-api-key": "YOUR_ELEVENLABS_API_KEY",
+    "Content-Type": "application/json"
 }
 ```
 
-### 2. Multiple Voices (Text to Dialogue)
+### 1. Text to Speech with Audio Tags (Recommended!)
 
-Two or more people talking. Like a conversation!
+**Endpoint:** `POST https://api.elevenlabs.io/v1/text-to-speech/{voice_id}`
 
-**The Phone Number:**
+**Request:**
+```json
+{
+  "text": "Hello world [emphatic] with expression! [shouts]",
+  "voice_settings": {
+    "stability": 0.25,
+    "similarity_boost": 0.9,
+    "style": 0.5
+  },
+  "model_id": "eleven_v3",
+  "output_format": "mp3_44100_128"
+}
 ```
-POST https://api.elevenlabs.io/v1/text-to-dialogue
+
+**Audio Tags in text:**
+```
+"CODE [shouts] everywhere!"           → Loud emphasis
+"the secret [emphatic] is..."          → Strong emphasis
+"wait [long pause] what?"               → Dramatic pause
+"not telling anyone [whispers]"        → Quiet delivery
 ```
 
-**What You Say:**
+### 2. Text to Dialogue (Multi-Voice)
+
+**Endpoint:** `POST https://api.elevenlabs.io/v1/text-to-dialogue`
+
+**Request:**
 ```json
 {
   "inputs": [
@@ -47,133 +64,122 @@ POST https://api.elevenlabs.io/v1/text-to-dialogue
 }
 ```
 
-## The Magic Key (API Key)
+### Voice Settings for Expression
 
-Before you can call the API, you need a special password. It's like showing an ID card before entering a building!
-
-Your API key: `YOUR_API_KEY_HERE`
-
-**You need this in every request:**
-```
-Header: xi-api-key: YOUR_API_KEY_HERE
-```
-
-## The Voices You Can Use
-
-| Voice Name | Voice ID | Best For |
-|------------|----------|----------|
-| Brittney | kPzsL2i3teMYv0FxEYQ6 | Fun, social media |
-| George | JBFqnCBsd6RMkjVDRZzb | Storytelling |
-| Sarah | EXAVITQu4vr4xnSDxMaL | Professional |
-| Roger | CwhRBWXzGAHq8TQ4Fs17 | Casual |
-| Matilda | XrExE9yKIg1WjnnlVkGX | Educational |
-| Adam | pNInz6obpgDQGcFmaJgB | Authority |
-
-## The Brains (Models)
-
-Different AI "brains" have different strengths!
-
-| Model | What It Does | Best For |
-|-------|--------------|----------|
-| eleven_v3 | Most expressive, emotional | High quality videos |
-| eleven_multilingual_v2 | Speaks many languages | International content |
-| eleven_flash_v2_5 | Super fast, low delay | Real-time apps |
-
-## Voice Settings (Make It Sound Different!)
-
-You can change how the voice sounds:
-
-| Setting | What It Does | Range |
-|---------|--------------|-------|
-| stability | How consistent the voice is | 0.0 - 1.0 |
-| similarity_boost | How much it sounds like the original | 0.0 - 1.0 |
-| style | How much emotion to add | 0.0 - 1.0 |
-| speed | How fast they talk | 0.5 - 2.0 |
-
-**Pro tip:** For narrated videos, use:
-```json
-{
-  "stability": 0.4,
-  "similarity_boost": 0.8,
-  "style": 0.2
-}
-```
-
-## Example: Using cURL (Command Line)
-
-### Single Voice:
-```bash
-curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/kPzsL2i3teMYv0FxEYQ6" \
-  -H "xi-api-key: YOUR_API_KEY_HERE" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "text": "Hello world!",
-    "voice_settings": {"stability": 0.4, "similarity_boost": 0.8},
-    "model_id": "eleven_v3"
-  }' \
-  --output hello.mp3
-```
-
-### Multiple Voices:
-```bash
-curl -X POST "https://api.elevenlabs.io/v1/text-to-dialogue" \
-  -H "xi-api-key: YOUR_API_KEY_HERE" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "inputs": [
-      {"text": "Hello!", "voice_id": "kPzsL2i3teMYv0FxEYQ6"},
-      {"text": "Hi there!", "voice_id": "JBFqnCBsd6RMkjVDRZzb"}
-    ]
-  }' \
-  --output conversation.mp3
-```
-
-## Example: Using Python
-
-```python
-import requests
-
-# Your settings
-API_KEY = "YOUR_API_KEY_HERE"
-VOICE_ID = "kPzsL2i3teMYv0FxEYQ6"
-
-# Make the request
-response = requests.post(
-    f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}",
-    headers={"xi-api-key": API_KEY},
-    json={
-        "text": "Hello world!",
-        "voice_settings": {"stability": 0.4, "similarity_boost": 0.8},
-        "model_id": "eleven_v3"
-    }
-)
-
-# Save the audio
-with open("hello.mp3", "wb") as f:
-    f.write(response.content)
-```
-
-## Output Formats
-
-You can get your audio in different formats:
-
-| Format | What It Is |
-|--------|------------|
-| mp3_44100_128 | Standard MP3 (best quality/size) |
-| mp3_44100_192 | High quality MP3 |
-| wav_44100 | Uncompressed audio (bigger file) |
-| pcm_16000 | Raw audio for processing |
-
-## Response Headers (Secret Info!)
-
-When you get your audio back, there's hidden info:
-
-- `x-character-count` - How many characters you used (for billing!)
-- `request-id` - A unique ID for this request
-- `current-concurrent-requests` - How many requests happening now
+| Setting | For Drama | For Narration |
+|---------|-----------|----------------|
+| stability | 0.25 | 0.4 |
+| similarity_boost | 0.9 | 0.8 |
+| style | 0.5 | 0.2 |
+| speed | 1.0 | 1.0 |
 
 ---
 
-**That's the API!** 
+## Part 2: OpenAI API (Images)
 
-Check out [Voice Guide](voice-guide.md) to learn more about picking the perfect voice! 🎤
+### Authentication
+
+```python
+headers = {
+    "Authorization": "Bearer YOUR_OPENAI_API_KEY",
+    "Content-Type": "application/json"
+}
+```
+
+### Generate Image
+
+**Endpoint:** `POST https://api.openai.com/v1/images/generations`
+
+**Request:**
+```json
+{
+  "model": "gpt-image-1",
+  "prompt": "Cinematic dark tech visualization, chaotic code fragments, dramatic lighting",
+  "n": 1,
+  "size": "1024x1024"
+}
+```
+
+### Response
+```json
+{
+  "data": [
+    {"url": "https://..."}  // Download this URL
+  ]
+}
+```
+
+---
+
+## Complete Python Example
+
+```python
+import os
+import requests
+from dotenv import load_dotenv
+
+# Load API keys
+load_dotenv()
+ELEVENLABS_KEY = os.getenv("ELEVENLABS_API_KEY")
+OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+
+# 1. Generate Audio
+audio_response = requests.post(
+    "https://api.elevenlabs.io/v1/text-to-speech/kPzsL2i3teMYv0FxEYQ6",
+    headers={"xi-api-key": ELEVENLABS_KEY, "Content-Type": "application/json"},
+    json={
+        "text": "Every developer knows [emphatic] this feeling [long pause]",
+        "voice_settings": {"stability": 0.25, "similarity_boost": 0.9, "style": 0.5},
+        "model_id": "eleven_v3"
+    }
+)
+with open("audio.mp3", "wb") as f:
+    f.write(audio_response.content)
+
+# 2. Generate Image
+image_response = requests.post(
+    "https://api.openai.com/v1/images/generations",
+    headers={"Authorization": f"Bearer {OPENAI_KEY}", "Content-Type": "application/json"},
+    json={
+        "model": "gpt-image-1",
+        "prompt": "Cinematic dark tech visualization",
+        "n": 1,
+        "size": "1024x1024"
+    }
+)
+image_url = image_response.json()["data"][0]["url"]
+
+# Download image
+img = requests.get(image_url).content
+with open("image.png", "wb") as f:
+    f.write(img)
+
+# 3. Create Video (requires ffmpeg)
+# ffmpeg -loop 1 -i image.png -i audio.mp3 -shortest output.mp4
+```
+
+---
+
+## API Endpoints Summary
+
+| Service | Endpoint | Purpose |
+|---------|-----------|---------|
+| ElevenLabs | `POST /v1/text-to-speech/{voice_id}` | Single voice |
+| ElevenLabs | `POST /v1/text-to-dialogue` | Multi-voice |
+| OpenAI | `POST /v1/images/generations` | AI images |
+
+---
+
+## Cost Estimates
+
+| Operation | Cost |
+|-----------|------|
+| ElevenLabs v3 audio (per minute) | ~$0.01-0.05 |
+| OpenAI GPT Image (per image) | ~$0.01-0.05 |
+| **Total per 2-min video** | **~$0.10-0.30** |
+
+---
+
+**Now you can use both APIs!** 
+
+Check out [voice-guide.md](voice-guide.md) for the full Audio Tags reference! 🎤

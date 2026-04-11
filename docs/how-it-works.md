@@ -1,96 +1,126 @@
 # How It Works 🔍
 
-## What's Happening When You Make a Voice?
+## The Complete AI Video Pipeline
 
-Imagine you have a robot friend. You write down what you want to say, and the robot reads it out loud. That's basically what ElevenLabs does!
-
-But wait... how does the robot learn to talk like a human? Let me explain...
-
-## The Big Idea: AI = Really Smart Pattern Matcher
-
-You know how when you watch a lot of videos of people talking, you start to learn how people sound? AI (Artificial Intelligence) does something similar!
-
-### It's Like Learning a New Song 🎵
-
-1. **Hear lots of examples** - AI listens to thousands of hours of people talking
-2. **Find patterns** - It notices that when people say "hello", their voice goes up a little bit
-3. **Practice** - It tries to make sounds and compares them to the real ones
-4. **Get better** - Over time, it learns to sound more and more real
-
-## What's Happening Step by Step?
-
-When you use our script, here's what happens:
+This project combines TWO powerful AI services to create SPECTACULAR videos:
 
 ```
-YOU: "Hello world!"
+YOUR SCRIPT
     ↓
-Python Script sends your text to ElevenLabs
-    ↓
-ElevenLabs AI figures out:
-  - How to pronounce each word
-  - What emotion to use
-  - How fast or slow to talk
-    ↓
-ElevenLabs makes a sound file (like an MP3)
-    ↓
-YOUR COMPUTER: Gets the MP3 file and saves it! 🎉
+    ├─→ ElevenLabs v3 (Voice) + Audio Tags
+    │       ↓
+    │    MP3 AUDIO
+    │
+    └─→ OpenAI GPT Image (Images)
+            ↓
+         PNG IMAGES
+              ↓
+         FFmpeg (Combine)
+              ↓
+         FINAL VIDEO 🎬
 ```
 
-## Why Does It Sound So Real?
+## Part 1: ElevenLabs v3 - Expressive Voice AI
 
-ElevenLabs has learned from A LOT of voice recordings. It knows:
+### How Voice AI Works
 
-- 🔊 **How voices change** when someone's happy or sad
-- 🎯 **How to say words** correctly (even weird ones!)
-- ⏱️ **When to pause** (like for a dramatic effect)
-- 🌎 **Multiple languages** - it can speak in 70+ languages!
+Imagine you have a robot friend. You write what you want to say, the robot reads it out loud with EXPRESSION. That's ElevenLabs!
 
-## What's an API? (Don't worry, it's simple!)
+### The Magic: Audio Tags!
 
-Think of an API like a **drive-through at a restaurant**:
+ElevenLabs v3 understands special tags that control emotion:
 
-1. You (your computer) pull up to the window
-2. You give them your order (your text)
-3. They make your food (AI generates voice)
-4. They give you the food (MP3 file comes back)
+```
+"CODE EVERYWHERE [shouts]" 
+     ↓
+AI adds loud, emphasized pronunciation
 
-The API is just the "window" that lets you talk to the AI kitchen!
+"the secret is [emphatic] self-verification"
+     ↓  
+AI adds strong emphasis on "self-verification"
+
+"are you ready [long pause] to guide them?"
+     ↓
+AI adds dramatic pause before ending
+```
+
+### Why Does It Sound So Real?
+
+ElevenLabs learned from millions of voice recordings and knows:
+- 🔊 How voices change with emotion
+- 🎯 How to pronounce anything
+- ⏱️ When to pause naturally
+- 💫 How to add drama and excitement
+
+## Part 2: OpenAI GPT Image - Cinematic Images
+
+### How Image AI Works
+
+You describe what you want to see, AI generates a real image:
+
+```
+YOUR PROMPT: "Cinematic dark tech visualization, chaotic code fragments..."
+     ↓
+OpenAI GPT Image
+     ↓
+BEAUTIFUL IMAGE (1024x1024)
+```
+
+### Our Cinematic Prompts
+
+Each scene has a specialized prompt:
+- Scene 1: Chaos, dark void, red accents
+- Scene 2: Light revealing path, hope
+- Scene 3: Three pillars, structure
+- Scene 4: Rocket ascending, success
+- Scene 5: Future horizon, sunrise
+
+## Part 3: FFmpeg - Video Assembly
+
+FFmpeg is the magic tool that combines everything:
+- Takes one image and loops it
+- Adds the audio track
+- Outputs a watchable video!
+
+```bash
+ffmpeg -loop 1 -i image.png -i audio.mp3 -shortest output.mp4
+```
+
+## The Full Workflow
+
+```
+1. WRITE SCRIPT with Audio Tags
+       ↓
+2. GENERATE AUDIO with v3
+       ↓
+3. GENERATE IMAGES with OpenAI
+       ↓
+4. ADD TEXT OVERLAYS
+       ↓
+5. CREATE VIDEO with FFmpeg
+       ↓
+6. UPLOAD to GitHub Release!
+```
 
 ## Key Words To Remember
 
-| Word | Simple Meaning |
-|------|----------------|
-| **AI** | A computer that can learn and think |
-| **API** | A way for computers to talk to each other |
-| **MP3** | A type of sound file (like a music file) |
-| **Voice ID** | A special code that tells which voice to use |
-| **Model** | The brain that makes the voice sounds |
+| Term | What It Does |
+|------|--------------|
+| **Audio Tags** | Special commands like [shouts], [emphatic] that control voice expression |
+| **v3 Model** | ElevenLabs' most expressive AI voice model |
+| **GPT Image** | OpenAI's AI image generator |
+| **FFmpeg** | Tool that combines images + audio = video |
+| **API** | The "window" that lets computers talk to AI services |
 
-## The Voices Are Different!
+## Why This Is Special
 
-Remember how every person sounds different? These AI voices are different too!
-
-- **Brittney** sounds like a fun friend telling you about something cool
-- **George** sounds like a storyteller reading a book
-- **Sarah** sounds like a professional reporter
-
-The AI changes:
-- 🎵 **Pitch** - How high or low the voice is
-- ⚡ **Speed** - How fast or slow they talk
-- 💫 **Emotion** - Happy, serious, excited, calm
-
-## Making a Video
-
-Here's the fun part! To make a video, we need:
-
-1. **Audio** - The talking (that's what ElevenLabs makes!)
-2. **Images** - Pictures that show while the audio plays
-3. **Video** - Putting them together!
-
-Our `create_video.py` script does this using something called **ffmpeg** - it's like a magic tool that can stick images and sounds together!
+1. **No recording needed** - Just type your script
+2. **Expressive voice** - Audio Tags make it sound REAL
+3. **Custom images** - Describe what you want, get it
+4. **Professional quality** - Cinematic look with text overlays
 
 ---
 
-**Now you know how it works!** 
+**Now you understand the COMPLETE pipeline!**
 
-Next, check out the [API Guide](api-guide.md) to learn how to talk to ElevenLabs yourself! 🎮
+Next, check out the [API Guide](api-guide.md) to learn both APIs in detail! 🎮
