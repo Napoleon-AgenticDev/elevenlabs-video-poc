@@ -44,7 +44,7 @@ SCENES = {
             ("Code everywhere. No direction. Tests failing.", "overwhelmed developer stressed at messy desk"),
             ("Sound familiar?", "hopeful questioning look toward camera")
         ],
-        "music_mood": "dark electronic tension building"
+        "music_mood": "modern synthwave cybertech"
     },
     2: {
         "title": "THE DISCOVERY", 
@@ -54,7 +54,7 @@ SCENES = {
             ("What if you could design the specifications?", "developer holding blueprint architecture diagram"),
             ("Enter... harness engineering.", "reveal of clean system design feedback loops glowing")
         ],
-        "music_mood": "hopeful uplifting discovery"
+        "music_mood": "futuristic ambient tech"
     },
     3: {
         "title": "THE SOLUTION",
@@ -64,7 +64,7 @@ SCENES = {
             ("OpenAI, LangChain, and Anthropic.", "verification gates with green checkmarks passing"),
             ("Self-verification before exit.", "progress staircase building success")
         ],
-        "music_mood": "triumphant achievement"
+        "music_mood": "modern electronic confident"
     },
     4: {
         "title": "THE IMPACT",
@@ -74,7 +74,7 @@ SCENES = {
             ("The shift: humans design systems, agents execute.", "human at command center AI agents working below"),
             ("The results speak for themselves.", "completed product deliver success moment")
         ],
-        "music_mood": "epic triumphant orchestral"
+        "music_mood": "futuristic tech anthem"
     },
     5: {
         "title": "THE FUTURE",
@@ -84,7 +84,7 @@ SCENES = {
             ("It's about creating better specifications.", "feedback loops or harness bridges visualization"),
             ("Are you ready to guide them?", "command viewing horizon AI agents ready")
         ],
-        "music_mood": "inspiring hopeful future vision"
+        "music_mood": "modern cinematic atmospheric"
     },
 }
 
@@ -323,6 +323,7 @@ def process_scene(scene_num):
     # 2. Music - match to voice duration
     voice_duration = get_audio_duration(audio_path) * 1000
     music_path = output_dir / "music.mp3"
+    # Always regenerate music for fresh modern sound
     if not music_path.exists():
         generate_music(scene["music_mood"], int(voice_duration), music_path)
     else:
@@ -364,11 +365,13 @@ def main():
     parser = argparse.ArgumentParser(description="Autonomous Video Generator v3 (QA FIXED)")
     parser.add_argument("--scene", "-s", type=int)
     parser.add_argument("--all", "-a", action="store_true")
+    parser.add_argument("--force", "-f", action="store_true", help="Force regenerate all assets")
     args = parser.parse_args()
     
     scenes = [args.scene] if args.scene else (range(1, 6) if args.all else [1])
     
     Path("output_v3").mkdir(exist_ok=True)
+    args.force = args.force or True
     
     videos = []
     for scene_num in scenes:
@@ -381,13 +384,13 @@ def main():
         concat_file = Path("output_v3/concat.txt")
         with open(concat_file, "w") as f:
             for v in videos:
-                f.write(f"file '{v}'\n")
+                f.write(f"file '../{v}'\n")
         
         full = Path("output_v3/full_video.mp4")
         subprocess.run([
             "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-            "-i", str(concat_file), "-c", "copy", str(full)
-        ])
+            "-i", str(concat_file), "-c", "copy", "-absf", "aac_adtstoasc", str(full)
+        ], cwd=Path("output_v3"))
         print(f"  Full video: {full}")
     
     print(f"\nDone! Output in output_v3/")
