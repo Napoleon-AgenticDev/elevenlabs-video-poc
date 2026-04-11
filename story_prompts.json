@@ -1,0 +1,260 @@
+{
+  "scene1": {
+    "scene": 1,
+    "title": "THE PROBLEM",
+    "story_data": {
+      "story_elements": {
+        "setting": "Modern tech office/coworking space, realistic professional environment",
+        "lighting": "Cinematic natural lighting, some dramatic backlighting, depth of field",
+        "people": "Realistic professionals, diverse team, authentic expressions",
+        "colors": "Warm earth tones with technical blue accents, professional palette",
+        "style": "Photorealistic cinematography, not animated or cartoonish",
+        "recurring_elements": [
+          "Computers/monitors with code or visualizations",
+          "Teams collaborating",
+          "Progress indicators (charts, checkmarks)",
+          "Architecture diagrams and blueprints"
+        ],
+        "mood_progression": [
+          "Confusion/chaos \u2192 Discovery \u2192 Clarity \u2192 Triumph \u2192 Vision"
+        ]
+      },
+      "visual_anchors": {
+        "main_character": "A software developer, mid-30s, diverse, focused expression",
+        "environment": "Tech startup office with glass walls, natural light",
+        "props": "Laptop, multiple monitors, notebook, coffee cup",
+        "color_scheme": "Warm skin tones, cool blue technical accents, green for success"
+      }
+    },
+    "prompts": [
+      {
+        "segment_text": "Every developer knows this feeling.",
+        "emotion": "relatable, slight frustration",
+        "frame": 1,
+        "prompt": "Stressed software developer in modern tech office, multiple monitors showing error code, professional lighting, photorealistic style, realistic professional, frustrated expression, cinematic portrait photography, 8k resolution"
+      },
+      {
+        "segment_text": "You're building an AI system, and it starts spiraling out of control.",
+        "emotion": "overwhelmed, chaotic",
+        "frame": 2,
+        "prompt": "Chaotic desk with scattered code printouts, red error messages on screens, overwhelmed developer, office environment, professional lighting, photorealistic, stressed, professional cinematography"
+      },
+      {
+        "segment_text": "Code everywhere. No direction. Tests failing.",
+        "emotion": "stressed, lost",
+        "frame": 3,
+        "prompt": "Developer looking at blank screen with no clear direction, hopeful but confused, tech startup environment, natural light from windows, photorealistic, cinematic depth of field"
+      },
+      {
+        "segment_text": "Sound familiar?",
+        "emotion": "hopeful, questioning",
+        "frame": 4,
+        "prompt": "Developer having realization moment, light bulb icon above head, developer, tech office environment, dramatic lighting, photorealistic, excited, epic shot"
+      }
+    ]
+  },
+  "scene2": {
+    "scene": 2,
+    "title": "THE DISCOVERY",
+    "story_data": {
+      "story_elements": {
+        "setting": "Modern tech office/coworking space, realistic professional environment",
+        "lighting": "Cinematic natural lighting, some dramatic backlighting, depth of field",
+        "people": "Realistic professionals, diverse team, authentic expressions",
+        "colors": "Warm earth tones with technical blue accents, professional palette",
+        "style": "Photorealistic cinematography, not animated or cartoonish",
+        "recurring_elements": [
+          "Computers/monitors with code or visualizations",
+          "Teams collaborating",
+          "Progress indicators (charts, checkmarks)",
+          "Architecture diagrams and blueprints"
+        ],
+        "mood_progression": [
+          "Confusion/chaos \u2192 Discovery \u2192 Clarity \u2192 Triumph \u2192 Vision"
+        ]
+      },
+      "visual_anchors": {
+        "main_character": "A software developer, mid-30s, diverse, focused expression",
+        "environment": "Tech startup office with glass walls, natural light",
+        "props": "Laptop, multiple monitors, notebook, coffee cup",
+        "color_scheme": "Warm skin tones, cool blue technical accents, green for success"
+      }
+    },
+    "prompts": [
+      {
+        "segment_text": "What if there was a better way?",
+        "emotion": "curious, searching",
+        "frame": 1,
+        "prompt": "Eureka moment in tech office, developer seeing blueprint, modern office, professional lighting, photorealistic style, curious"
+      },
+      {
+        "segment_text": "What if you could design the specifications?",
+        "emotion": "contemplative, design-focused",
+        "frame": 2,
+        "prompt": "Architectural diagram or specification document in hands, developer studying it, modern office, professional lighting, photorealistic style, contemplative, cinematic"
+      },
+      {
+        "segment_text": "Enter... harness engineering.",
+        "emotion": "dramatic, reveal",
+        "frame": 3,
+        "prompt": "Feedback loop visualization as glowing circuit or flow, tech environment, professional lighting, photorealistic style, enlightened, digital-physical blend"
+      },
+      {
+        "segment_text": "It's about creating environments and feedback loops.",
+        "emotion": "clarity, understanding",
+        "frame": 4,
+        "prompt": "Developer with AI agent visualization, tech environment, tech aesthetic, professional lighting, photorealistic style, confident, success visualization"
+      }
+    ]
+  },
+  "scene3": {
+    "scene": 3,
+    "title": "THE SOLUTION",
+    "story_data": {
+      "story_elements": {
+        "setting": "Modern tech office/coworking space, realistic professional environment",
+        "lighting": "Cinematic natural lighting, some dramatic backlighting, depth of field",
+        "people": "Realistic professionals, diverse team, authentic expressions",
+        "colors": "Warm earth tones with technical blue accents, professional palette",
+        "style": "Photorealistic cinematography, not animated or cartoonish",
+        "recurring_elements": [
+          "Computers/monitors with code or visualizations",
+          "Teams collaborating",
+          "Progress indicators (charts, checkmarks)",
+          "Architecture diagrams and blueprints"
+        ],
+        "mood_progression": [
+          "Confusion/chaos \u2192 Discovery \u2192 Clarity \u2192 Triumph \u2192 Vision"
+        ]
+      },
+      "visual_anchors": {
+        "main_character": "A software developer, mid-30s, diverse, focused expression",
+        "environment": "Tech startup office with glass walls, natural light",
+        "props": "Laptop, multiple monitors, notebook, coffee cup",
+        "color_scheme": "Warm skin tones, cool blue technical accents, green for success"
+      }
+    },
+    "prompts": [
+      {
+        "segment_text": "Three companies cracked the code.",
+        "emotion": "confident, powerful",
+        "frame": 1,
+        "prompt": "Three pillars or logos (OpenAI LangChain Anthropic), tech office, professional lighting, photorealistic style, confident, corporate epic"
+      },
+      {
+        "segment_text": "OpenAI, LangChain, and Anthropic.",
+        "emotion": "professional, credible",
+        "frame": 2,
+        "prompt": "Code flowing through verification gates with green checkmarks, tech office, professional lighting, photorealistic style, methodical"
+      },
+      {
+        "segment_text": "Self-verification before exit.",
+        "emotion": "methodical, precise",
+        "frame": 3,
+        "prompt": "Progress staircase or feature list building, developer watching, tech office, professional lighting, photorealistic style, accomplished"
+      },
+      {
+        "segment_text": "Incremental progress over scope.",
+        "emotion": "achievement, success",
+        "frame": 4,
+        "prompt": "Self-verification loop with checkmarks passing, tech office, professional lighting, photorealistic style, successful"
+      }
+    ]
+  },
+  "scene4": {
+    "scene": 4,
+    "title": "THE IMPACT",
+    "story_data": {
+      "story_elements": {
+        "setting": "Modern tech office/coworking space, realistic professional environment",
+        "lighting": "Cinematic natural lighting, some dramatic backlighting, depth of field",
+        "people": "Realistic professionals, diverse team, authentic expressions",
+        "colors": "Warm earth tones with technical blue accents, professional palette",
+        "style": "Photorealistic cinematography, not animated or cartoonish",
+        "recurring_elements": [
+          "Computers/monitors with code or visualizations",
+          "Teams collaborating",
+          "Progress indicators (charts, checkmarks)",
+          "Architecture diagrams and blueprints"
+        ],
+        "mood_progression": [
+          "Confusion/chaos \u2192 Discovery \u2192 Clarity \u2192 Triumph \u2192 Vision"
+        ]
+      },
+      "visual_anchors": {
+        "main_character": "A software developer, mid-30s, diverse, focused expression",
+        "environment": "Tech startup office with glass walls, natural light",
+        "props": "Laptop, multiple monitors, notebook, coffee cup",
+        "color_scheme": "Warm skin tones, cool blue technical accents, green for success"
+      }
+    },
+    "prompts": [
+      {
+        "segment_text": "Level four autonomy achieved.",
+        "emotion": "triumphant, epic",
+        "frame": 1,
+        "prompt": "Level 4 autonomy rocket launching, developer watching, tech office, professional lighting, photorealistic style, triumphant, epic wide shot"
+      },
+      {
+        "segment_text": "The shift: humans design systems, agents execute.",
+        "emotion": "transformational, paradigm-shift",
+        "frame": 2,
+        "prompt": "Hierarchical layer visualization (planning/implementation/verification), tech office, professional lighting, photorealistic style, transformational, layered composition"
+      },
+      {
+        "segment_text": "The results speak for themselves.",
+        "emotion": "confident, prove-it",
+        "frame": 3,
+        "prompt": "Human at command center, AI agents executing below, orchestration visualization, tech office, professional lighting, photorealistic style, paradigm-shift"
+      }
+    ]
+  },
+  "scene5": {
+    "scene": 5,
+    "title": "THE FUTURE",
+    "story_data": {
+      "story_elements": {
+        "setting": "Modern tech office/coworking space, realistic professional environment",
+        "lighting": "Cinematic natural lighting, some dramatic backlighting, depth of field",
+        "people": "Realistic professionals, diverse team, authentic expressions",
+        "colors": "Warm earth tones with technical blue accents, professional palette",
+        "style": "Photorealistic cinematography, not animated or cartoonish",
+        "recurring_elements": [
+          "Computers/monitors with code or visualizations",
+          "Teams collaborating",
+          "Progress indicators (charts, checkmarks)",
+          "Architecture diagrams and blueprints"
+        ],
+        "mood_progression": [
+          "Confusion/chaos \u2192 Discovery \u2192 Clarity \u2192 Triumph \u2192 Vision"
+        ]
+      },
+      "visual_anchors": {
+        "main_character": "A software developer, mid-30s, diverse, focused expression",
+        "environment": "Tech startup office with glass walls, natural light",
+        "props": "Laptop, multiple monitors, notebook, coffee cup",
+        "color_scheme": "Warm skin tones, cool blue technical accents, green for success"
+      }
+    },
+    "prompts": [
+      {
+        "segment_text": "The future isn't about writing more code.",
+        "emotion": "visionary, forward-looking",
+        "frame": 1,
+        "prompt": "Beautiful specification blueprint as art, developer creating, tech office, professional lighting, photorealistic style, visionary"
+      },
+      {
+        "segment_text": "It's about creating better specifications.",
+        "emotion": "architectural, design",
+        "frame": 2,
+        "prompt": "Feedback rivers or harness bridges as visualization, tech office, professional lighting, photorealistic style, flowing"
+      },
+      {
+        "segment_text": "Are you ready to guide them?",
+        "emotion": "empowering, call-to-action",
+        "frame": 3,
+        "prompt": "Observability dashboard glowing, developer monitoring, tech office, professional lighting, photorealistic style, controlling"
+      }
+    ]
+  }
+}
