@@ -26,8 +26,10 @@ load_dotenv()
 
 ELEVENLABS_KEY = os.getenv("ELEVENLABS_API_KEY")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
+VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "kPzsL2i3teMYv0FxEYQ6")  # From .env
 
-VOICE_ID = "kPzsL2i3teMYv0FxEYQ6"  # Brittney
+# Gemini model for images - using v1beta
+GEMINI_MODEL = "gemini-2.5-flash-image"
 
 SCENES = {
     1: {
@@ -149,12 +151,12 @@ def generate_music(mood, duration_ms, output_path):
 
 
 def generate_image_gemini(prompt, output_path):
-    """Generate image using Gemini via simple API."""
+    """Generate image using Gemini 2.5 Flash Image."""
     import requests
     
     print(f"  Generating image...")
     try:
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-exp:generateContent?key={GEMINI_KEY}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
         
         data = {
             "contents": [{"parts": [{"text": prompt}]}]
@@ -185,7 +187,7 @@ def generate_image_gemini(prompt, output_path):
                         print(f"    Image saved: {output_path}")
                         return output_path
             
-            print(f"    No image in response")
+            print(f"    No image in response: {result}")
         else:
             print(f"    API error: {response.status_code} - {response.text[:150]}")
     except Exception as e:
