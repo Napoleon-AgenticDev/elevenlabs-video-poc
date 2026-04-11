@@ -13,7 +13,7 @@
       color: #fff;
       padding: 40px 20px;
     }
-    .container { max-width: 900px; margin: 0 auto; }
+    .container { max-width: 1000px; margin: 0 auto; }
     h1 {
       text-align: center;
       font-size: 2.5rem;
@@ -23,41 +23,34 @@
       -webkit-text-fill-color: transparent;
     }
     .subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+    .hero-video {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero-video video {
+      max-width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,212,255,0.2);
+    }
     .scenes { display: grid; gap: 20px; }
     .scene {
       background: rgba(255,255,255,0.05);
       border-radius: 16px;
       padding: 24px;
       border: 1px solid rgba(255,255,255,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: center;
     }
-    .scene:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(0,212,255,0.1);
+    @media (max-width: 700px) {
+      .scene { grid-template-columns: 1fr; }
     }
-    .scene-number {
-      display: inline-block;
-      background: linear-gradient(90deg, #00d4ff, #7c3aed);
-      color: #fff;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .scene h2 { font-size: 1.3rem; margin-bottom: 10px; color: #00d4ff; }
-    .scene p { color: #ccc; line-height: 1.6; font-size: 0.95rem; }
-    .audio-player { margin-top: 16px; }
-    .audio-player audio { width: 100%; height: 40px; border-radius: 20px; }
-    .download-btn {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 8px 16px;
-      background: rgba(0,212,255,0.2);
-      color: #00d4ff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 0.85rem;
+    .scene-content h2 { color: #00d4ff; margin-bottom: 10px; }
+    .scene-content p { color: #ccc; line-height: 1.6; }
+    .scene-video video {
+      width: 100%;
+      border-radius: 12px;
     }
     .info-box {
       background: rgba(124,58,237,0.1);
@@ -67,87 +60,95 @@
       margin-bottom: 30px;
     }
     .info-box h3 { color: #7c3aed; margin-bottom: 10px; }
-    .info-box p { color: #aaa; font-size: 0.9rem; }
-    footer { text-align: center; margin-top: 40px; color: #666; font-size: 0.85rem; }
+    .info-box p { color: #aaa; }
+    footer { text-align: center; margin-top: 40px; color: #666; }
     a { color: #00d4ff; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🎬 ElevenLabs Video POC</h1>
-    <p class="subtitle">The Power of Specifications - AI Voice Demo</p>
+    <p class="subtitle">The Power of Specifications - Harness Engineering</p>
     
     <div class="info-box">
       <h3>About This Project</h3>
-      <p>This is a proof-of-concept demonstrating AI-generated voiceovers using ElevenLabs API. 
-         The video script covers "Harness Engineering" - how companies like OpenAI, LangChain, 
+      <p>This video demonstrates AI-generated voiceovers using ElevenLabs API. 
+         The script covers "Harness Engineering" - how companies like OpenAI, LangChain, 
          and Anthropic use specifications to guide AI agents.</p>
     </div>
 
+    <div class="hero-video">
+      <video controls preload="metadata" poster="">
+        <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.1/final_video.mp4" type="video/mp4">
+        Your browser does not support video playback.
+      </video>
+    </div>
+
+    <h2 style="margin: 30px 0 20px;">Individual Scenes</h2>
     <div class="scenes">
       <div class="scene">
-        <span class="scene-number">SCENE 1</span>
-        <h2>The Problem</h2>
-        <p>Every developer knows this feeling. You're building an AI system, and it starts spiraling out of control. Code everywhere. No direction. Tests failing. Sound familiar?</p>
-        <div class="audio-player">
-          <audio controls preload="none">
-            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene1.mp3" type="audio/mpeg">
-          </audio>
+        <div class="scene-content">
+          <h2>Scene 1: The Problem</h2>
+          <p>Every developer knows this feeling. You're building an AI system, and it starts spiraling out of control. Code everywhere. No direction. Tests failing.</p>
         </div>
-        <a class="download-btn" href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene1.mp3" download>⬇ Download</a>
+        <div class="scene-video">
+          <video controls preload="none">
+            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.1/video_scene1.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <div class="scene">
-        <span class="scene-number">SCENE 2</span>
-        <h2>The Discovery</h2>
-        <p>What if there was a better way? What if instead of writing every line of code, you could design the specifications that guide your AI? Enter... harness engineering.</p>
-        <div class="audio-player">
-          <audio controls preload="none">
-            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene2.mp3" type="audio/mpeg">
-          </audio>
+        <div class="scene-content">
+          <h2>Scene 2: The Discovery</h2>
+          <p>What if there was a better way? What if instead of writing every line of code, you could design the specifications that guide your AI?</p>
         </div>
-        <a class="download-btn" href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene2.mp3" download>⬇ Download</a>
+        <div class="scene-video">
+          <video controls preload="none">
+            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.1/video_scene2.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <div class="scene">
-        <span class="scene-number">SCENE 3</span>
-        <h2>The Solution</h2>
-        <p>Three companies cracked the code. OpenAI generated ONE MILLION lines of code with just 3 engineers. LangChain improved their agent by 14 percentage points. The secret? Self-verification before exit.</p>
-        <div class="audio-player">
-          <audio controls preload="none">
-            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene3.mp3" type="audio/mpeg">
-          </audio>
+        <div class="scene-content">
+          <h2>Scene 3: The Solution</h2>
+          <p>Three companies cracked the code. OpenAI generated ONE MILLION lines of code with just 3 engineers. LangChain improved their agent by 14 percentage points.</p>
         </div>
-        <a class="download-btn" href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene3.mp3" download>⬇ Download</a>
+        <div class="scene-video">
+          <video controls preload="none">
+            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.1/video_scene3.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <div class="scene">
-        <span class="scene-number">SCENE 4</span>
-        <h2>The Impact</h2>
-        <p>The results speak for themselves. OpenAI reached level 4 autonomy - agents that can go from prompt to PR with minimal human input. The shift? Humans don't write code anymore. They design systems.</p>
-        <div class="audio-player">
-          <audio controls preload="none">
-            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene4.mp3" type="audio/mpeg">
-          </audio>
+        <div class="scene-content">
+          <h2>Scene 4: The Impact</h2>
+          <p>The results speak for themselves. OpenAI reached level 4 autonomy - agents that can go from prompt to PR with minimal human input.</p>
         </div>
-        <a class="download-btn" href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene4.mp3" download>⬇ Download</a>
+        <div class="scene-video">
+          <video controls preload="none">
+            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.1/video_scene4.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <div class="scene">
-        <span class="scene-number">SCENE 5</span>
-        <h2>The Future</h2>
-        <p>The future of development isn't about writing more code. It's about creating better specifications. Better feedback loops. Better harnesses. The agents are waiting. Are you ready to guide them?</p>
-        <div class="audio-player">
-          <audio controls preload="none">
-            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene5.mp3" type="audio/mpeg">
-          </audio>
+        <div class="scene-content">
+          <h2>Scene 5: The Future</h2>
+          <p>The future of development isn't about writing more code. It's about creating better specifications. The agents are waiting. Are you ready to guide them?</p>
         </div>
-        <a class="download-btn" href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.0/brittney_scene5.mp3" download>⬇ Download</a>
+        <div class="scene-video">
+          <video controls preload="none">
+            <source src="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases/download/v1.0.1/video_scene5.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
 
     <footer>
-      <p>Built with ElevenLabs API • Voice: Brittney (kPzsL2i3teMYv0FxEYQ6) • Model: eleven_v3</p>
+      <p>Built with ElevenLabs API • Voice: Brittney • Model: eleven_v3</p>
       <p><a href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc">View on GitHub →</a></p>
     </footer>
   </div>
