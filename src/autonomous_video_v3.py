@@ -21,11 +21,88 @@ import base64
 import subprocess
 import argparse
 import requests
+import time
+import logging
 from pathlib import Path
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 
 load_dotenv()
+
+# Try to import MLflow for tracking (optional)
+try:
+    import mlflow
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    MLFLOW_AVAILABLE = False
+
+# =============================================================================
+# LOGGING & TRACKING SETUP
+# =============================================================================
+
+# Configure logging
+LOG_FILE = Path("output/projects/logs/video_generation.log")
+LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# API Call tracking
+API_CALLS = {
+    "elevenlabs_tts": 0,
+    "elevenlabs_music": 0,
+    "gemini_image": 0,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0
+}
+
+def log_api_call(api_type, tokens=0, cost=0.0, details=""):
+    """Log API call for tracking."""
+    API_CALLS[api_type] = API_CALLS.get(api_type, 0) + 1
+    API_CALLS["total_tokens"] += tokens
+    API_CALLS["total_cost_usd"] += cost
+    logger.info(f"API CALL: {api_type} | tokens: {tokens} | cost: ${cost:.4f} | {details}")
+
+def log_event(event_type, details=""):
+    """Log general event."""
+    logger.info(f"EVENT: {event_type} | {details}")
+
+def get_tracking_summary():
+    """Get summary of all tracking."""
+    return API_CALLS.copy()
+
+# Initialize MLflow if available
+MLFLOW_EXPERIMENT = "video-production"
+def init_mlflow():
+    """Initialize MLflow tracking."""
+    if not MLFLOW_AVAILABLE:
+        logger.warning("MLflow not installed - run: pip install mlflow")
+        return None
+    
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "./mlruns")
+    mlflow.set_tracking_uri(tracking_uri)
+    
+    try:
+        exp = mlflow.get_experiment_by_name(MLFLOW_EXPERIMENT)
+        if exp:
+            mlflow.set_experiment(exp.experiment_id)
+        else:
+            mlflow.create_experiment(MLFLOW_EXPERIMENT)
+            mlflow.set_experiment(MLFLOW_EXPERIMENT)
+        logger.info(f"MLflow initialized: {tracking_uri}")
+        return mlflow
+    except Exception as e:
+        logger.warning(f"MLflow init failed: {e}")
+        return None
+
+mlflow_client = init_mlflow()
 
 # Load YAML config if available, otherwise use defaults
 CONFIG = {
@@ -766,6 +843,7 @@ def main():
     parser.add_argument("--all", "-a", action="store_true")
     parser.add_argument("--force", "-f", action="store_true", help="Force regenerate all assets")
     parser.add_argument("--project", "-p", default="default", help="Project name for output folder")
+    parser.add_argument("--track", "-t", action="store_true", help="Enable MLflow tracking")
     args = parser.parse_args()
     
     scenes = [args.scene] if args.scene else (range(1, 6) if args.all else [1])
@@ -776,28 +854,85 @@ def main():
     output_dir = output_base / "output_v3"
     output_dir.mkdir(exist_ok=True)
     
-    print(f"Output: {output_dir}")
-    args.force = args.force or True
+    # Start tracking
+    log_event("START", f"project={args.project}, scenes={scenes}")
     
-    videos = []
-    for scene_num in scenes:
-        video = process_scene(scene_num, output_dir)
-        if video:
-            videos.append(video)
-    
-    if len(videos) > 1:
-        print(f"\n=== Concatenating ===")
-        concat_file = output_dir / "concat.txt"
-        with open(concat_file, "w") as f:
-            for v in videos:
-                f.write(f"file '{v}'\n")
+    if args.track and mlflow_client:
+        with mlflow.start_run(run_name=f"video-{args.project}") as run:
+            mlflow.log_param("project", args.project)
+            mlflow.log_param("scenes", len(scenes))
+            mlflow.log_param("content_rating", CONFIG.get("content_rating", "R"))
+            
+            try:
+                videos = []
+                for scene_num in scenes:
+                    start_time = time.time()
+                    video = process_scene(scene_num, output_dir)
+                    elapsed = time.time() - start_time
+                    
+                    if video:
+                        videos.append(video)
+                        if mlflow_client:
+                            mlflow.log_metric("scene_duration", elapsed, scene_num)
+                
+                if len(videos) > 1:
+                    print(f"\n=== Concatenating ===")
+                    concat_file = output_dir / "concat.txt"
+                    with open(concat_file, "w") as f:
+                        for v in videos:
+                            f.write(f"file '{v}'\n")
+                    
+                    full = output_dir / "full_video.mp4"
+                    subprocess.run([
+                        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+                        "-i", str(concat_file), "-c", "copy", str(full)
+                    ], cwd=output_dir)
+                    print(f"  Full video: {full}")
+                
+                # Log final metrics
+                summary = get_tracking_summary()
+                log_event("COMPLETE", f"total_cost=${summary['total_cost_usd']:.4f}")
+                
+                if mlflow_client:
+                    mlflow.log_metric("total_api_calls", sum(v for k,v in summary.items() if "total" not in k))
+                    mlflow.log_metric("total_cost", summary.get("total_cost_usd", 0))
+                    mlflow.log_param("output_path", str(output_dir))
+                    
+            except Exception as e:
+                log_event("ERROR", str(e))
+                if mlflow_client:
+                    mlflow.log_param("error", str(e))
+                raise
+    else:
+        # Original flow without MLflow
+        print(f"Output: {output_dir}")
+        args.force = args.force or True
         
-        full = output_dir / "full_video.mp4"
-        subprocess.run([
-            "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-            "-i", str(concat_file), "-c", "copy", str(full)
-        ], cwd=output_dir)
-        print(f"  Full video: {full}")
+        videos = []
+        for scene_num in scenes:
+            video = process_scene(scene_num, output_dir)
+            if video:
+                videos.append(video)
+        
+        if len(videos) > 1:
+            print(f"\n=== Concatenating ===")
+            concat_file = output_dir / "concat.txt"
+            with open(concat_file, "w") as f:
+                for v in videos:
+                    f.write(f"file '{v}'\n")
+            
+            full = output_dir / "full_video.mp4"
+            subprocess.run([
+                "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+                "-i", str(concat_file), "-c", "copy", str(full)
+            ], cwd=output_dir)
+            print(f"  Full video: {full}")
+        
+        summary = get_tracking_summary()
+        log_event("COMPLETE", f"total_cost=${summary.get('total_cost_usd', 0):.4f}")
+    
+    print(f"\nDone! Output in {output_dir}/")
+    print(f"Log: {LOG_FILE}")
     
     print(f"\nDone! Output in {output_dir}/")
 
