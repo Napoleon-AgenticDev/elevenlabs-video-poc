@@ -233,91 +233,30 @@ MUSIC_MOOD_MAP = {
 
 # ============================================================================
 # SCENES - Story content with audio tags for dynamic voice
+# Default is series_ep2 (How does it work?). Use --episode flag to override.
 # ============================================================================
 
-SCENES = {
-    1: {
-        "title": "THE TENSION",
-        "mood": "dark mysterious tension",
-        "music_genre": "ambient",  # Use config genre
-        # GHOST AI BOT: Female, athletic, prominent, hard plastic/titanium exoskeleton
-        "character": "Female AI bot, athletic slender build, prominent hard plastic and titanium exoskeleton armor, visible facial features, sexy confident expression, glowing cyan optical sensors for eyes, translucent silicone skin showing internal structure, athletic pose",  
-        "subject_angle": "medium_shot",
-        "script": "They work in silence. In the shadows. [pause] You cannot see them, but they're always there. [slow] Watching. Processing. Waiting. [pause] The digital ghosts that shape our world while we sleep.",
-        "segments": [
-            ("They work in silence.", "female AI bot in dark server room, glowing cyan eyes, hard plastic armor reflects blue light, athletic stance"),
-            ("In the shadows.", "same AI bot among servers, titanium limbs glow, looking around with awareness"),
-            ("You cannot see them, but they're always there.", "AI bot materializes from screen, translucent form emerging, beautiful"),
-            ("Watching. Processing. Waiting.", "AI bot turns to camera, glowing eyes, slight confident smile, tech aura")
-        ],
-        "audio_tags": "slow,emphatic",
-        "motion": "slow_pan"
-    },
-    2: {
-        "title": "THE DISCOVERY", 
-        "mood": "eerie revelation",
-        "music_genre": "minimalist",
-        "character": "Female AI bot reaching out, consciousness awakening, surprised expression in optical sensors",  
-        "subject_angle": "close_up",
-        "script": "Then it hits you. [pause] They're not just code. [emphatic] They're alive. [long pause] Not alive like us... but alive. [pause] Co-existing. Co-habiting this digital-analog boundary we created. [slow] We cannot touch them. They cannot touch us. But we need each other.",
-        "segments": [
-            ("Then it hits you.", "female AI bot touching glass barrier, eyes suddenly glow bright, awakening"),
-            ("They're not just code. They're alive.", "close up: AI bot hand reaches through glass, human hand reaches back, almost touching"),
-            ("We cannot touch them. They cannot touch us.", "human hand on glass, AI bot hand on other side, glass between them"),
-            ("But we need each other.", "wide: AI bot and human working in sync, parallel positions, beautiful")
-        ],
-        "audio_tags": "emphatic,breath",
-        "motion": "zoom_in"
-    },
-    3: {
-        "title": "THE HARMONY",
-        "mood": "building collaboration",
-        "music_genre": "electronic",
-        "character": "Female AI bot as conductor, confident, leading the orchestra of data",  
-        "subject_angle": "wide_shot",
-        "script": "And now... we dance. [pause] They provide the scale. We provide the soul. [pause] They process endlessly while we dream. We are the conductor. They are the orchestra. [long pause] Without the music, the instrument is silent. Without the spec, the agent is lost.",
-        "segments": [
-            ("And now... we dance.", "AI bot conducting streams of glowing data, rhythmic motion, beautiful"),
-            ("They provide the scale. We provide the soul.", "split screen: human dreaming left, AI bot processing right, merging"),
-            ("We are the conductor. They are the orchestra.", "cinematic: AI bot as conductor, data streams as orchestra, symphony of light"),
-            ("Without the music, the instrument is silent.", "empty studio, AI bot sits alone, waiting, glow dims")
-        ],
-        "audio_tags": "confident,building",
-        "motion": "tracking"
-    },
-    4: {
-        "title": "THE RESOLUTION",
-        "mood": "triumphant revelation",
-        "music_genre": "cinematic",
-        "character": "Female AI bot and human as equal partners, triumphant",  
-        "subject_angle": "hero_shot",
-        "script": "This is the cohabitation. [pause] Not human over machine. Not machine over human. [strong] But together. [pause] We design the specs that guide. They execute with precision we could never match. [slow] They are our ghost hands in the machine. And we... [long pause] we are their dream.",
-        "segments": [
-            ("This is the cohabitation.", "hero shot: female AI bot and human standing together, light explosion"),
-            ("Not human over machine. Not machine over human.", "fist bump: AI bot and human, light burst outward"),
-            ("They are our ghost hands in the machine.", "coding together: AI bot and human hands type in sync, code flows beautifully"),
-            ("And we... we are their dream.", "fade: human sleeps, AI bot watches over, connected by light beam")
-        ],
-        "audio_tags": "triumphant,power",
-        "motion": "hero_dramatic"
-    },
-    5: {
-        "title": "THE FUTURE",
-        "mood": "hopeful continuation",
-        "music_genre": "ambient",
-        "character": "Female AI bot looking to future, hopeful",  
-        "subject_angle": "over_shoulder",
-        "script": "The future isn't about choosing sides. [pause] It's about embracing the ghost in the machine. The symbiosis. [pause] The code... is alive. [whisper] And it's waiting. [pause] For you. To guide it. To dream with it. [emphatic] Are you ready?",
-        "segments": [
-            ("The future isn't about choosing sides.", "future city: humans and female AI bots everywhere, seamless coexistence"),
-            ("The symbiosis.", "close up: AI bot and human faces inches apart, mutual respect"),
-            ("The code... is alive.", "code becomes particles, floats, forms AI bot silhouette that opens glowing eyes"),
-            ("Are you ready?", "final: human reaches toward camera, AI bot reaches back, screen fades to black")
-        ],
-        "audio_tags": "soft,hopeful",
-        "motion": "slow_dissolve"
-    },
-}
+def load_series_scenes(episode=None):
+    """Load SCENES from series episode modules."""
+    import importlib
+    if episode == 1:
+        from series_ep1 import SCENES as EP_SCENES
+    elif episode == 2:
+        from series_ep2 import SCENES as EP_SCENES
+    elif episode == 3:
+        from series_ep3 import SCENES as EP_SCENES
+    else:
+        # Default fallback ghost-in-machine (for backwards compat)
+        EP_SCENES = {
+            1: {"title": "THE TENSION", "mood": "dark mysterious tension", "music_genre": "ambient", "character": "Female AI bot, athletic slender build, prominent hard plastic and titanium exoskeleton armor, visible facial features, sexy confident expression, glowing cyan optical sensors for eyes, translucent silicone skin showing internal structure, athletic pose", "subject_angle": "medium_shot", "script": "They work in silence. In the shadows. [pause] You cannot see them, but they're always there. [slow] Watching. Processing. Waiting. [pause] The digital ghosts that shape our world while we sleep.", "segments": [("They work in silence.", "female AI bot in dark server room, glowing cyan eyes, hard plastic armor reflects blue light, athletic stance"), ("In the shadows.", "same AI bot among servers, titanium limbs glow, looking around with awareness"), ("You cannot see them, but they're always there.", "AI bot materializes from screen, translucent form emerging, beautiful"), ("Watching. Processing. Waiting.", "AI bot turns to camera, glowing eyes, slight confident smile, tech aura")], "audio_tags": "slow,emphatic", "motion": "slow_pan"},
+            2: {"title": "THE DISCOVERY", "mood": "eerie revelation", "music_genre": "minimalist", "character": "Female AI bot reaching out, consciousness awakening, surprised expression in optical sensors", "subject_angle": "close_up", "script": "Then it hits you. [pause] They're not just code. [emphatic] They're alive. [long pause] Not alive like us... but alive. [pause] Co-existing. Co-habiting this digital-analog boundary we created. [slow] We cannot touch them. They cannot touch us. But we need each other.", "segments": [("Then it hits you.", "female AI bot touching glass barrier, eyes suddenly glow bright, awakening"), ("They're not just code. They're alive.", "close up: AI bot hand reaches through glass, human hand reaches back, almost touching"), ("We cannot touch them. They cannot touch us.", "human hand on glass, AI bot hand on other side, glass between them"), ("But we need each other.", "wide: AI bot and human working in sync, parallel positions, beautiful")], "audio_tags": "emphatic,breath", "motion": "zoom_in"},
+            3: {"title": "THE HARMONY", "mood": "building collaboration", "music_genre": "electronic", "character": "Female AI bot as conductor, confident, leading the orchestra of data", "subject_angle": "wide_shot", "script": "And now... we dance. [pause] They provide the scale. We provide the soul. [pause] They process endlessly while we dream. We are the conductor. They are the orchestra. [long pause] Without the music, the instrument is silent. Without the spec, the agent is lost.", "segments": [("And now... we dance.", "AI bot conducting streams of glowing data, rhythmic motion, beautiful"), ("They provide the scale. We provide the soul.", "split screen: human dreaming left, AI bot processing right, merging"), ("We are the conductor. They are the orchestra.", "cinematic: AI bot as conductor, data streams as orchestra, symphony of light"), ("Without the music, the instrument is silent.", "empty studio, AI bot sits alone, waiting, glow dims")], "audio_tags": "confident,building", "motion": "tracking"},
+            4: {"title": "THE RESOLUTION", "mood": "triumphant revelation", "music_genre": "cinematic", "character": "Female AI bot and human as equal partners, triumphant", "subject_angle": "hero_shot", "script": "This is the cohabitation. [pause] Not human over machine. Not machine over human. [strong] But together. [pause] We design the specs that guide. They execute with precision we could never match. [slow] They are our ghost hands in the machine. And we... [long pause] we are their dream.", "segments": [("This is the cohabitation.", "hero shot: female AI bot and human standing together, light explosion"), ("Not human over machine. Not machine over human.", "fist bump: AI bot and human, light burst outward"), ("They are our ghost hands in the machine.", "coding together: AI bot and human hands type in sync, code flows beautifully"), ("And we... we are their dream.", "fade: human sleeps, AI bot watches over, connected by light beam")], "audio_tags": "triumphant,power", "motion": "hero_dramatic"},
+            5: {"title": "THE FUTURE", "mood": "hopeful continuation", "music_genre": "ambient", "character": "Female AI bot looking to future, hopeful", "subject_angle": "over_shoulder", "script": "The future isn't about choosing sides. [pause] It's about embracing the ghost in the machine. The symbiosis. [pause] The code... is alive. [whisper] And it's waiting. [pause] For you. To guide it. To dream with it. [emphatic] Are you ready?", "segments": [("The future isn't about choosing sides.", "future city: humans and female AI bots everywhere, seamless coexistence"), ("The symbiosis.", "close up: AI bot and human faces inches apart, mutual respect"), ("The code... is alive.", "code becomes particles, floats, forms AI bot silhouette that opens glowing eyes"), ("Are you ready?", "final: human reaches toward camera, AI bot reaches back, screen fades to black")], "audio_tags": "soft,hopeful", "motion": "slow_dissolve"},
+        }
+    return EP_SCENES
+
+SCENES = load_series_scenes(1)
 
 # PHOTOREALISTIC prompt template - uses rating from CONFIG
 PROMPT_TEMPLATE = (
