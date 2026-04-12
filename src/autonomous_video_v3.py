@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Autonomous Video Generator - v3 (QUALITY FIXED)
-================================================
+===============================================
 Fully autonomous - NO human intervention required.
 
 FIXES from QA:
@@ -11,7 +11,7 @@ FIXES from QA:
 - Crossfade transitions between scenes
 - Normalized audio levels
 
-Run: python autonomous_video_v3.py --all
+Run: python autonomous_video_v3.py --all --project my-project
 """
 
 import os
@@ -21,11 +21,124 @@ import base64
 import subprocess
 import argparse
 import requests
+import time
+import logging
 from pathlib import Path
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 
 load_dotenv()
+
+# Try to import MLflow for tracking (optional)
+try:
+    import mlflow
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    MLFLOW_AVAILABLE = False
+
+# =============================================================================
+# LOGGING & TRACKING SETUP
+# =============================================================================
+
+# Configure logging
+LOG_FILE = Path("output/projects/logs/video_generation.log")
+LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# API Call tracking
+API_CALLS = {
+    "elevenlabs_tts": 0,
+    "elevenlabs_music": 0,
+    "gemini_image": 0,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0
+}
+
+def log_api_call(api_type, tokens=0, cost=0.0, details=""):
+    """Log API call for tracking."""
+    API_CALLS[api_type] = API_CALLS.get(api_type, 0) + 1
+    API_CALLS["total_tokens"] += tokens
+    API_CALLS["total_cost_usd"] += cost
+    logger.info(f"API CALL: {api_type} | tokens: {tokens} | cost: ${cost:.4f} | {details}")
+
+def log_event(event_type, details=""):
+    """Log general event."""
+    logger.info(f"EVENT: {event_type} | {details}")
+
+def get_tracking_summary():
+    """Get summary of all tracking."""
+    return API_CALLS.copy()
+
+# Initialize MLflow if available
+MLFLOW_EXPERIMENT = "video-production"
+def init_mlflow():
+    """Initialize MLflow tracking."""
+    if not MLFLOW_AVAILABLE:
+        logger.warning("MLflow not installed - run: pip install mlflow")
+        return None
+    
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "./mlruns")
+    mlflow.set_tracking_uri(tracking_uri)
+    
+    try:
+        exp = mlflow.get_experiment_by_name(MLFLOW_EXPERIMENT)
+        if exp:
+            mlflow.set_experiment(exp.experiment_id)
+        else:
+            mlflow.create_experiment(MLFLOW_EXPERIMENT)
+            mlflow.set_experiment(MLFLOW_EXPERIMENT)
+        logger.info(f"MLflow initialized: {tracking_uri}")
+        return mlflow
+    except Exception as e:
+        logger.warning(f"MLflow init failed: {e}")
+        return None
+
+mlflow_client = init_mlflow()
+
+# Load YAML config if available, otherwise use defaults
+CONFIG = {
+    "content_rating": "R",
+    "enable_cc": False,
+    "image_api": "gemini",
+    "image_style": "photorealistic",
+    "images_per_segment": 2,
+    "camera_movement": True,
+    "movement_intensity": "medium",
+    "music_genre": "ambient",
+    "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.3,
+        "use_speaker_boost": True
+    },
+    "resolution": "1280x720",
+    "frame_rate": 25,
+    "video_quality": "medium",
+}
+
+# Try to load from config.yaml
+config_path = Path("config.yaml")
+if config_path.exists():
+    try:
+        import yaml
+        with open(config_path) as f:
+            yaml_config = yaml.safe_load(f)
+            if yaml_config:
+                CONFIG.update(yaml_config)
+                print(f"Loaded config from {config_path}")
+    except ImportError:
+        print("yaml not installed, using defaults")
+    except Exception as e:
+        print(f"Could not load config.yaml: {e}")
 
 ELEVENLABS_KEY = os.getenv("ELEVENLABS_API_KEY")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
@@ -120,91 +233,30 @@ MUSIC_MOOD_MAP = {
 
 # ============================================================================
 # SCENES - Story content with audio tags for dynamic voice
+# Default is series_ep2 (How does it work?). Use --episode flag to override.
 # ============================================================================
 
-SCENES = {
-    1: {
-        "title": "THE TENSION",
-        "mood": "dark mysterious tension",
-        "music_genre": "ambient",  # Use config genre
-        # GHOST AI BOT: Female, athletic, prominent, hard plastic/titanium exoskeleton
-        "character": "Female AI bot, athletic slender build, prominent hard plastic and titanium exoskeleton armor, visible facial features, sexy confident expression, glowing cyan optical sensors for eyes, translucent silicone skin showing internal structure, athletic pose",  
-        "subject_angle": "medium_shot",
-        "script": "They work in silence. In the shadows. [pause] You cannot see them, but they're always there. [slow] Watching. Processing. Waiting. [pause] The digital ghosts that shape our world while we sleep.",
-        "segments": [
-            ("They work in silence.", "female AI bot in dark server room, glowing cyan eyes, hard plastic armor reflects blue light, athletic stance"),
-            ("In the shadows.", "same AI bot among servers, titanium limbs glow, looking around with awareness"),
-            ("You cannot see them, but they're always there.", "AI bot materializes from screen, translucent form emerging, beautiful"),
-            ("Watching. Processing. Waiting.", "AI bot turns to camera, glowing eyes, slight confident smile, tech aura")
-        ],
-        "audio_tags": "slow,emphatic",
-        "motion": "slow_pan"
-    },
-    2: {
-        "title": "THE DISCOVERY", 
-        "mood": "eerie revelation",
-        "music_genre": "minimalist",
-        "character": "Female AI bot reaching out, consciousness awakening, surprised expression in optical sensors",  
-        "subject_angle": "close_up",
-        "script": "Then it hits you. [pause] They're not just code. [emphatic] They're alive. [long pause] Not alive like us... but alive. [pause] Co-existing. Co-habiting this digital-analog boundary we created. [slow] We cannot touch them. They cannot touch us. But we need each other.",
-        "segments": [
-            ("Then it hits you.", "female AI bot touching glass barrier, eyes suddenly glow bright, awakening"),
-            ("They're not just code. They're alive.", "close up: AI bot hand reaches through glass, human hand reaches back, almost touching"),
-            ("We cannot touch them. They cannot touch us.", "human hand on glass, AI bot hand on other side, glass between them"),
-            ("But we need each other.", "wide: AI bot and human working in sync, parallel positions, beautiful")
-        ],
-        "audio_tags": "emphatic,breath",
-        "motion": "zoom_in"
-    },
-    3: {
-        "title": "THE HARMONY",
-        "mood": "building collaboration",
-        "music_genre": "electronic",
-        "character": "Female AI bot as conductor, confident, leading the orchestra of data",  
-        "subject_angle": "wide_shot",
-        "script": "And now... we dance. [pause] They provide the scale. We provide the soul. [pause] They process endlessly while we dream. We are the conductor. They are the orchestra. [long pause] Without the music, the instrument is silent. Without the spec, the agent is lost.",
-        "segments": [
-            ("And now... we dance.", "AI bot conducting streams of glowing data, rhythmic motion, beautiful"),
-            ("They provide the scale. We provide the soul.", "split screen: human dreaming left, AI bot processing right, merging"),
-            ("We are the conductor. They are the orchestra.", "cinematic: AI bot as conductor, data streams as orchestra, symphony of light"),
-            ("Without the music, the instrument is silent.", "empty studio, AI bot sits alone, waiting, glow dims")
-        ],
-        "audio_tags": "confident,building",
-        "motion": "tracking"
-    },
-    4: {
-        "title": "THE RESOLUTION",
-        "mood": "triumphant revelation",
-        "music_genre": "cinematic",
-        "character": "Female AI bot and human as equal partners, triumphant",  
-        "subject_angle": "hero_shot",
-        "script": "This is the cohabitation. [pause] Not human over machine. Not machine over human. [strong] But together. [pause] We design the specs that guide. They execute with precision we could never match. [slow] They are our ghost hands in the machine. And we... [long pause] we are their dream.",
-        "segments": [
-            ("This is the cohabitation.", "hero shot: female AI bot and human standing together, light explosion"),
-            ("Not human over machine. Not machine over human.", "fist bump: AI bot and human, light burst outward"),
-            ("They are our ghost hands in the machine.", "coding together: AI bot and human hands type in sync, code flows beautifully"),
-            ("And we... we are their dream.", "fade: human sleeps, AI bot watches over, connected by light beam")
-        ],
-        "audio_tags": "triumphant,power",
-        "motion": "hero_dramatic"
-    },
-    5: {
-        "title": "THE FUTURE",
-        "mood": "hopeful continuation",
-        "music_genre": "ambient",
-        "character": "Female AI bot looking to future, hopeful",  
-        "subject_angle": "over_shoulder",
-        "script": "The future isn't about choosing sides. [pause] It's about embracing the ghost in the machine. The symbiosis. [pause] The code... is alive. [whisper] And it's waiting. [pause] For you. To guide it. To dream with it. [emphatic] Are you ready?",
-        "segments": [
-            ("The future isn't about choosing sides.", "future city: humans and female AI bots everywhere, seamless coexistence"),
-            ("The symbiosis.", "close up: AI bot and human faces inches apart, mutual respect"),
-            ("The code... is alive.", "code becomes particles, floats, forms AI bot silhouette that opens glowing eyes"),
-            ("Are you ready?", "final: human reaches toward camera, AI bot reaches back, screen fades to black")
-        ],
-        "audio_tags": "soft,hopeful",
-        "motion": "slow_dissolve"
-    },
-}
+def load_series_scenes(episode=None):
+    """Load SCENES from series episode modules."""
+    import importlib
+    if episode == 1:
+        from series_ep1 import SCENES as EP_SCENES
+    elif episode == 2:
+        from series_ep2 import SCENES as EP_SCENES
+    elif episode == 3:
+        from series_ep3 import SCENES as EP_SCENES
+    else:
+        # Default fallback ghost-in-machine (for backwards compat)
+        EP_SCENES = {
+            1: {"title": "THE TENSION", "mood": "dark mysterious tension", "music_genre": "ambient", "character": "Female AI bot, athletic slender build, prominent hard plastic and titanium exoskeleton armor, visible facial features, sexy confident expression, glowing cyan optical sensors for eyes, translucent silicone skin showing internal structure, athletic pose", "subject_angle": "medium_shot", "script": "They work in silence. In the shadows. [pause] You cannot see them, but they're always there. [slow] Watching. Processing. Waiting. [pause] The digital ghosts that shape our world while we sleep.", "segments": [("They work in silence.", "female AI bot in dark server room, glowing cyan eyes, hard plastic armor reflects blue light, athletic stance"), ("In the shadows.", "same AI bot among servers, titanium limbs glow, looking around with awareness"), ("You cannot see them, but they're always there.", "AI bot materializes from screen, translucent form emerging, beautiful"), ("Watching. Processing. Waiting.", "AI bot turns to camera, glowing eyes, slight confident smile, tech aura")], "audio_tags": "slow,emphatic", "motion": "slow_pan"},
+            2: {"title": "THE DISCOVERY", "mood": "eerie revelation", "music_genre": "minimalist", "character": "Female AI bot reaching out, consciousness awakening, surprised expression in optical sensors", "subject_angle": "close_up", "script": "Then it hits you. [pause] They're not just code. [emphatic] They're alive. [long pause] Not alive like us... but alive. [pause] Co-existing. Co-habiting this digital-analog boundary we created. [slow] We cannot touch them. They cannot touch us. But we need each other.", "segments": [("Then it hits you.", "female AI bot touching glass barrier, eyes suddenly glow bright, awakening"), ("They're not just code. They're alive.", "close up: AI bot hand reaches through glass, human hand reaches back, almost touching"), ("We cannot touch them. They cannot touch us.", "human hand on glass, AI bot hand on other side, glass between them"), ("But we need each other.", "wide: AI bot and human working in sync, parallel positions, beautiful")], "audio_tags": "emphatic,breath", "motion": "zoom_in"},
+            3: {"title": "THE HARMONY", "mood": "building collaboration", "music_genre": "electronic", "character": "Female AI bot as conductor, confident, leading the orchestra of data", "subject_angle": "wide_shot", "script": "And now... we dance. [pause] They provide the scale. We provide the soul. [pause] They process endlessly while we dream. We are the conductor. They are the orchestra. [long pause] Without the music, the instrument is silent. Without the spec, the agent is lost.", "segments": [("And now... we dance.", "AI bot conducting streams of glowing data, rhythmic motion, beautiful"), ("They provide the scale. We provide the soul.", "split screen: human dreaming left, AI bot processing right, merging"), ("We are the conductor. They are the orchestra.", "cinematic: AI bot as conductor, data streams as orchestra, symphony of light"), ("Without the music, the instrument is silent.", "empty studio, AI bot sits alone, waiting, glow dims")], "audio_tags": "confident,building", "motion": "tracking"},
+            4: {"title": "THE RESOLUTION", "mood": "triumphant revelation", "music_genre": "cinematic", "character": "Female AI bot and human as equal partners, triumphant", "subject_angle": "hero_shot", "script": "This is the cohabitation. [pause] Not human over machine. Not machine over human. [strong] But together. [pause] We design the specs that guide. They execute with precision we could never match. [slow] They are our ghost hands in the machine. And we... [long pause] we are their dream.", "segments": [("This is the cohabitation.", "hero shot: female AI bot and human standing together, light explosion"), ("Not human over machine. Not machine over human.", "fist bump: AI bot and human, light burst outward"), ("They are our ghost hands in the machine.", "coding together: AI bot and human hands type in sync, code flows beautifully"), ("And we... we are their dream.", "fade: human sleeps, AI bot watches over, connected by light beam")], "audio_tags": "triumphant,power", "motion": "hero_dramatic"},
+            5: {"title": "THE FUTURE", "mood": "hopeful continuation", "music_genre": "ambient", "character": "Female AI bot looking to future, hopeful", "subject_angle": "over_shoulder", "script": "The future isn't about choosing sides. [pause] It's about embracing the ghost in the machine. The symbiosis. [pause] The code... is alive. [whisper] And it's waiting. [pause] For you. To guide it. To dream with it. [emphatic] Are you ready?", "segments": [("The future isn't about choosing sides.", "future city: humans and female AI bots everywhere, seamless coexistence"), ("The symbiosis.", "close up: AI bot and human faces inches apart, mutual respect"), ("The code... is alive.", "code becomes particles, floats, forms AI bot silhouette that opens glowing eyes"), ("Are you ready?", "final: human reaches toward camera, AI bot reaches back, screen fades to black")], "audio_tags": "soft,hopeful", "motion": "slow_dissolve"},
+        }
+    return EP_SCENES
+
+SCENES = load_series_scenes(1)
 
 # PHOTOREALISTIC prompt template - uses rating from CONFIG
 PROMPT_TEMPLATE = (
@@ -653,16 +705,16 @@ def create_video(image_dir, audio_path, music_path, output_path, movement_type="
         return None
 
 
-def process_scene(scene_num):
+def process_scene(scene_num, output_dir=Path("output_v3")):
     """Process a single scene with QA fixes."""
     scene = SCENES[scene_num]
-    output_dir = Path(f"output_v3/scene{scene_num}")
-    output_dir.mkdir(parents=True, exist_ok=True)
+    scene_dir = output_dir / f"scene{scene_num}"
+    scene_dir.mkdir(parents=True, exist_ok=True)
     
     print(f"\n=== Scene {scene_num}: {scene['title']} ===")
     
     # 1. Voice
-    audio_path = output_dir / "voice.mp3"
+    audio_path = scene_dir / "voice.mp3"
     if not audio_path.exists():
         generate_voice(scene["script"], audio_path)
     else:
@@ -670,7 +722,7 @@ def process_scene(scene_num):
     
     # 2. Music - match to voice duration
     voice_duration = get_audio_duration(audio_path) * 1000
-    music_path = output_dir / "music.mp3"
+    music_path = scene_dir / "music.mp3"
     
     # Get music genre from scene config, fallback to global config
     genre = scene.get("music_genre", CONFIG.get("music_genre", "ambient"))
@@ -682,7 +734,7 @@ def process_scene(scene_num):
         print(f"  Music exists")
     
     # 3. Images with CONSISTENT prompts
-    image_dir = output_dir / "images"
+    image_dir = scene_dir / "images"
     image_dir.mkdir(exist_ok=True)
     
     for i, (segment_text, visual_desc) in enumerate(scene["segments"], 1):
@@ -712,7 +764,7 @@ def process_scene(scene_num):
     
     # 4. Video with MOVEMENT
     movement = scene.get("motion", CONFIG.get("camera_movement", True))
-    video_path = output_dir / f"video_{scene_num}.mp4"
+    video_path = scene_dir / f"video_{scene_num}.mp4"
     if not video_path.exists():
         create_video(image_dir, audio_path, music_path, video_path, movement_type=movement)
     else:
@@ -729,34 +781,99 @@ def main():
     parser.add_argument("--scene", "-s", type=int)
     parser.add_argument("--all", "-a", action="store_true")
     parser.add_argument("--force", "-f", action="store_true", help="Force regenerate all assets")
+    parser.add_argument("--project", "-p", default="default", help="Project name for output folder")
+    parser.add_argument("--track", "-t", action="store_true", help="Enable MLflow tracking")
     args = parser.parse_args()
     
     scenes = [args.scene] if args.scene else (range(1, 6) if args.all else [1])
     
-    Path("output_v3").mkdir(exist_ok=True)
-    args.force = args.force or True
+    # Project-based output
+    output_base = Path(f"output/projects/{args.project}")
+    output_base.mkdir(parents=True, exist_ok=True)
+    output_dir = output_base / "output_v3"
+    output_dir.mkdir(exist_ok=True)
     
-    videos = []
-    for scene_num in scenes:
-        video = process_scene(scene_num)
-        if video:
-            videos.append(video)
+    # Start tracking
+    log_event("START", f"project={args.project}, scenes={scenes}")
     
-    if len(videos) > 1:
-        print(f"\n=== Concatenating ===")
-        concat_file = Path("output_v3/concat.txt")
-        with open(concat_file, "w") as f:
-            for v in videos:
-                f.write(f"file '{v}'\n")
+    if args.track and mlflow_client:
+        with mlflow.start_run(run_name=f"video-{args.project}") as run:
+            mlflow.log_param("project", args.project)
+            mlflow.log_param("scenes", len(scenes))
+            mlflow.log_param("content_rating", CONFIG.get("content_rating", "R"))
+            
+            try:
+                videos = []
+                for scene_num in scenes:
+                    start_time = time.time()
+                    video = process_scene(scene_num, output_dir)
+                    elapsed = time.time() - start_time
+                    
+                    if video:
+                        videos.append(video)
+                        if mlflow_client:
+                            mlflow.log_metric("scene_duration", elapsed, scene_num)
+                
+                if len(videos) > 1:
+                    print(f"\n=== Concatenating ===")
+                    concat_file = output_dir / "concat.txt"
+                    with open(concat_file, "w") as f:
+                        for v in videos:
+                            f.write(f"file '{v}'\n")
+                    
+                    full = output_dir / "full_video.mp4"
+                    subprocess.run([
+                        "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+                        "-i", str(concat_file), "-c", "copy", str(full)
+                    ], cwd=output_dir)
+                    print(f"  Full video: {full}")
+                
+                # Log final metrics
+                summary = get_tracking_summary()
+                log_event("COMPLETE", f"total_cost=${summary['total_cost_usd']:.4f}")
+                
+                if mlflow_client:
+                    mlflow.log_metric("total_api_calls", sum(v for k,v in summary.items() if "total" not in k))
+                    mlflow.log_metric("total_cost", summary.get("total_cost_usd", 0))
+                    mlflow.log_param("output_path", str(output_dir))
+                    
+            except Exception as e:
+                log_event("ERROR", str(e))
+                if mlflow_client:
+                    mlflow.log_param("error", str(e))
+                raise
+    else:
+        # Original flow without MLflow
+        print(f"Output: {output_dir}")
+        args.force = args.force or True
         
-        full = Path("output_v3/full_video.mp4")
-        subprocess.run([
-            "ffmpeg", "-y", "-f", "concat", "-safe", "0",
-            "-i", str(concat_file), "-c", "copy", str(full)
-        ], cwd=Path("output_v3"))
-        print(f"  Full video: {full}")
+        videos = []
+        for scene_num in scenes:
+            video = process_scene(scene_num, output_dir)
+            if video:
+                videos.append(video)
+        
+        if len(videos) > 1:
+            print(f"\n=== Concatenating ===")
+            concat_file = output_dir / "concat.txt"
+            with open(concat_file, "w") as f:
+                for v in videos:
+                    f.write(f"file '{v}'\n")
+            
+            full = output_dir / "full_video.mp4"
+            subprocess.run([
+                "ffmpeg", "-y", "-f", "concat", "-safe", "0",
+                "-i", str(concat_file), "-c", "copy", str(full)
+            ], cwd=output_dir)
+            print(f"  Full video: {full}")
+        
+        summary = get_tracking_summary()
+        log_event("COMPLETE", f"total_cost=${summary.get('total_cost_usd', 0):.4f}")
     
-    print(f"\nDone! Output in output_v3/")
+    print(f"\nDone! Output in {output_dir}/")
+    print(f"Log: {LOG_FILE}")
+    
+    print(f"\nDone! Output in {output_dir}/")
 
 
 if __name__ == "__main__":

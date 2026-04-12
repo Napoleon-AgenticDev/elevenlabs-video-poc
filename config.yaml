@@ -1,0 +1,46 @@
+# Video Production Configuration
+# Copy to config.yaml and customize for your project
+
+# =============================================================================
+# CONTENT RATING - Affects robot/character appearance
+# =============================================================================
+# Options: G, PG, PG13, R
+# G: Family-friendly, fully covered
+# PG: Standard/corporate design
+# PG13: Sleek/modern
+# R: Athletic/mature (current: more revealing armor)
+content_rating: "R"
+
+# =============================================================================
+# OUTPUT SETTINGS
+# =============================================================================
+enable_cc: false  # Show text on images
+resolution: "1280x720"
+frame_rate: 25
+video_quality: "medium"  # fast, medium, slow
+
+# =============================================================================
+# VISUAL SETTINGS
+# =============================================================================
+image_api: "gemini"  # gemini, elevenlabs, openai
+image_style: "photorealistic"
+images_per_segment: 2
+camera_movement: true
+movement_intensity: "medium"  # subtle, medium, dynamic
+
+# =============================================================================
+# AUDIO SETTINGS
+# =============================================================================
+music_genre: "ambient"  # ambient, cinematic, electronic, acoustic, minimalist
+voice_settings:
+  stability: 0.5
+  similarity_boost: 0.8
+  style: 0.3
+  use_speaker_boost: true
+
+# =============================================================================
+# SCENES - Can be overridden per project
+# =============================================================================
+# Each scene needs: title, mood, script, segments, audio_tags, motion, music_genre
+# See default scenes in the script for the structure
+default_scenes: true  # Use default 5-scene arc
