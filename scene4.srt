@@ -1,0 +1,31 @@
+1
+00:00:00,099 --> 00:00:02,338
+The results speak for themselves.
+
+2
+00:00:03,019 --> 00:00:05,480
+OpenAI reached level four autonomy,
+
+3
+00:00:05,980 --> 00:00:09,939
+agents that can go from prompt to PR with minimal human input.
+
+4
+00:00:10,460 --> 00:00:12,300
+LangChain's sandwich approach for
+
+5
+00:00:13,198 --> 00:00:17,298
+planning, for implementation, for verification
+
+6
+00:00:17,879 --> 00:00:20,559
+boosted performance by nearly fourteen points.
+
+7
+00:00:21,100 --> 00:00:21,719
+The shift?
+
+8
+00:00:22,359 --> 00:00:28,478
+Humans don't write code anymore. They design systems. They steer. Agents execute.
