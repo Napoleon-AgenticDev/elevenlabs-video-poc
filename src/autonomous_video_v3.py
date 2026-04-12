@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Autonomous Video Generator - v3 (QUALITY FIXED)
-================================================
+===============================================
 Fully autonomous - NO human intervention required.
 
 FIXES from QA:
@@ -11,7 +11,7 @@ FIXES from QA:
 - Crossfade transitions between scenes
 - Normalized audio levels
 
-Run: python autonomous_video_v3.py --all
+Run: python autonomous_video_v3.py --all --project my-project
 """
 
 import os
@@ -26,6 +26,42 @@ from dotenv import load_dotenv
 from PIL import Image, ImageDraw
 
 load_dotenv()
+
+# Load YAML config if available, otherwise use defaults
+CONFIG = {
+    "content_rating": "R",
+    "enable_cc": False,
+    "image_api": "gemini",
+    "image_style": "photorealistic",
+    "images_per_segment": 2,
+    "camera_movement": True,
+    "movement_intensity": "medium",
+    "music_genre": "ambient",
+    "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8,
+        "style": 0.3,
+        "use_speaker_boost": True
+    },
+    "resolution": "1280x720",
+    "frame_rate": 25,
+    "video_quality": "medium",
+}
+
+# Try to load from config.yaml
+config_path = Path("config.yaml")
+if config_path.exists():
+    try:
+        import yaml
+        with open(config_path) as f:
+            yaml_config = yaml.safe_load(f)
+            if yaml_config:
+                CONFIG.update(yaml_config)
+                print(f"Loaded config from {config_path}")
+    except ImportError:
+        print("yaml not installed, using defaults")
+    except Exception as e:
+        print(f"Could not load config.yaml: {e}")
 
 ELEVENLABS_KEY = os.getenv("ELEVENLABS_API_KEY")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY")
