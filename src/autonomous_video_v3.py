@@ -653,16 +653,16 @@ def create_video(image_dir, audio_path, music_path, output_path, movement_type="
         return None
 
 
-def process_scene(scene_num):
+def process_scene(scene_num, output_dir=Path("output_v3")):
     """Process a single scene with QA fixes."""
     scene = SCENES[scene_num]
-    output_dir = Path(f"output_v3/scene{scene_num}")
-    output_dir.mkdir(parents=True, exist_ok=True)
+    scene_dir = output_dir / f"scene{scene_num}"
+    scene_dir.mkdir(parents=True, exist_ok=True)
     
     print(f"\n=== Scene {scene_num}: {scene['title']} ===")
     
     # 1. Voice
-    audio_path = output_dir / "voice.mp3"
+    audio_path = scene_dir / "voice.mp3"
     if not audio_path.exists():
         generate_voice(scene["script"], audio_path)
     else:
@@ -670,7 +670,7 @@ def process_scene(scene_num):
     
     # 2. Music - match to voice duration
     voice_duration = get_audio_duration(audio_path) * 1000
-    music_path = output_dir / "music.mp3"
+    music_path = scene_dir / "music.mp3"
     
     # Get music genre from scene config, fallback to global config
     genre = scene.get("music_genre", CONFIG.get("music_genre", "ambient"))
@@ -682,7 +682,7 @@ def process_scene(scene_num):
         print(f"  Music exists")
     
     # 3. Images with CONSISTENT prompts
-    image_dir = output_dir / "images"
+    image_dir = scene_dir / "images"
     image_dir.mkdir(exist_ok=True)
     
     for i, (segment_text, visual_desc) in enumerate(scene["segments"], 1):
@@ -712,7 +712,7 @@ def process_scene(scene_num):
     
     # 4. Video with MOVEMENT
     movement = scene.get("motion", CONFIG.get("camera_movement", True))
-    video_path = output_dir / f"video_{scene_num}.mp4"
+    video_path = scene_dir / f"video_{scene_num}.mp4"
     if not video_path.exists():
         create_video(image_dir, audio_path, music_path, video_path, movement_type=movement)
     else:
@@ -729,34 +729,41 @@ def main():
     parser.add_argument("--scene", "-s", type=int)
     parser.add_argument("--all", "-a", action="store_true")
     parser.add_argument("--force", "-f", action="store_true", help="Force regenerate all assets")
+    parser.add_argument("--project", "-p", default="default", help="Project name for output folder")
     args = parser.parse_args()
     
     scenes = [args.scene] if args.scene else (range(1, 6) if args.all else [1])
     
-    Path("output_v3").mkdir(exist_ok=True)
+    # Project-based output
+    output_base = Path(f"output/projects/{args.project}")
+    output_base.mkdir(parents=True, exist_ok=True)
+    output_dir = output_base / "output_v3"
+    output_dir.mkdir(exist_ok=True)
+    
+    print(f"Output: {output_dir}")
     args.force = args.force or True
     
     videos = []
     for scene_num in scenes:
-        video = process_scene(scene_num)
+        video = process_scene(scene_num, output_dir)
         if video:
             videos.append(video)
     
     if len(videos) > 1:
         print(f"\n=== Concatenating ===")
-        concat_file = Path("output_v3/concat.txt")
+        concat_file = output_dir / "concat.txt"
         with open(concat_file, "w") as f:
             for v in videos:
                 f.write(f"file '{v}'\n")
         
-        full = Path("output_v3/full_video.mp4")
+        full = output_dir / "full_video.mp4"
         subprocess.run([
             "ffmpeg", "-y", "-f", "concat", "-safe", "0",
             "-i", str(concat_file), "-c", "copy", str(full)
-        ], cwd=Path("output_v3"))
+        ], cwd=output_dir)
         print(f"  Full video: {full}")
     
-    print(f"\nDone! Output in output_v3/")
+    print(f"\nDone! Output in {output_dir}/")
 
 
 if __name__ == "__main__":
