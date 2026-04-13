@@ -17,3 +17,7 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# Video outputs - use external CDN/storage
+output/
+output_v3/

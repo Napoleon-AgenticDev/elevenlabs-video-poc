@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost in the Machine - Symbiotic AI | Female AI Bot</title>
+  <title>Autonomous Video Generator - AI-Powered Production</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -22,95 +22,187 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .subtitle { text-align: center; #888; margin-bottom: 40px; }
-    .hero-video {
-      text-align: center;
-      margin-bottom: 40px;
-      background: rgba(255,255,255,0.05);
+    .subtitle { text-align: center; color: #888; margin-bottom: 40px; }
+    .info-box {
+      background: linear-gradient(135deg, rgba(0,255,255,0.15), rgba(255,0,255,0.1));
       border-radius: 16px;
-      padding: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(0,255,255,0.3);
     }
-    .hero-video video { max-width: 100%; border-radius: 12px; box-shadow: 0 0 40px rgba(0,255,255,0.3); }
-    .scenes { display: grid; gap: 20px; }
-    .scene {
+    .info-box h2 { color: #00ffff; margin-bottom: 15px; }
+    .info-box p { color: #ccc; line-height: 1.7; }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .feature {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 25px;
+      border: 1px solid rgba(0,255,255,0.2);
+    }
+    .feature h3 { color: #00ffff; margin-bottom: 10px; font-size: 1.2rem; }
+    .feature p { color: #aaa; font-size: 0.9rem; line-height: 1.5; }
+    .code-block {
+      background: #1a1a2e;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #00ff88;
+      overflow-x: auto;
+    }
+    .status-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #00ffff, #00ff88);
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin: 10px 0;
+    }
+    .repo-link {
+      display: inline-block;
+      background: #24292e;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin: 10px 5px;
+      font-weight: 500;
+    }
+    .repo-link:hover { background: #2f363d; }
+    .footer { text-align: center; margin-top: 50px; color: #666; font-size: 0.85rem; }
+    
+    /* Video Section */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+    .video-card {
       background: rgba(255,255,255,0.05);
       border-radius: 16px;
       padding: 20px;
       border: 1px solid rgba(0,255,255,0.2);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      align-items: center;
     }
-    @media (max-width: 700px) { .scene { grid-template-columns: 1fr; } }
-    .scene-content h2 { color: #00ffff; margin-bottom: 8px; font-size: 1.1rem; }
-    .scene-content p { color: #aaa; font-size: 0.85rem; line-height: 1.5; }
-    .scene-video video { width: 100%; border-radius: 10px; }
-    .info-box {
-      background: linear-gradient(135deg, rgba(0,255,255,0.15), rgba(255,0,255,0.1));
-      border: 1px solid rgba(0,255,255,0.3);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 30px;
+    .video-card h3 { color: #00ffff; margin-bottom: 10px; }
+    .video-card p { color: #aaa; font-size: 0.9rem; margin-bottom: 15px; }
+    .video-card video { width: 100%; border-radius: 10px; }
+    .video-link {
+      display: inline-block;
+      color: #ff00ff;
+      text-decoration: none;
+      font-size: 0.9rem;
     }
-    .info-box h3 { color: #00ffff; margin-bottom: 10px; font-size: 1.2rem; }
-    .info-box p { color: #ccc; font-size: 0.9rem; }
-    footer { text-align: center; margin-top: 40px; color: #666; font-size: 0.85rem; }
-    .badge { display: inline-block; background: linear-gradient(90deg, #00ffff, #ff00ff); color: #000; padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; margin-bottom: 10px; font-weight: bold; }
-    .glow { box-shadow: 0 0 40px rgba(0,255,255,0.4); }
-    .new-badge { background: linear-gradient(90deg, #ff00ff, #00ffff); }
+    .video-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>👻 GHOST IN THE MACHINE</h1>
-    <p class="subtitle">Symbiotic AI - Female AI Bot Story</p>
+    <h1>🤖 Autonomous Video Generator</h1>
+    <p class="subtitle">AI-Powered Video Production Pipeline</p>
+    
+    <div class="status-badge">🚀 Production Ready</div>
     
     <div class="info-box">
-      <h3>🤖 FEMALE AI BOT - Athletic Exoskeleton</h3>
-      <p>Cinematic story featuring female AI bots with hard plastic/titanium exoskeleton armor,
-         glowing cyan optical sensors, translucent silicone skin showing internal structure.
-         Athletic, prominent, sexy - working in symbiosis with humans.</p>
-      <p style="margin-top:10px;color:#00ffff;"><strong>✓ NO TEXT ON IMAGES - CC Disabled</strong></p>
+      <h2>Three-Part Video Series</h2>
+      <p>Cinematic series featuring ARIA (female AI agent with silver titanium exoskeleton, glowing cyan LED eyes) and Marcus (human developer) exploring the autonomous video generation system:</p>
+      <ul style="color: #ccc; margin: 15px 0; padding-left: 20px; line-height: 2;">
+        <li><strong>Episode 1:</strong> "What is this?" - Introduction to the repository</li>
+        <li><strong>Episode 2:</strong> "How does it work?" - Technical deep dive</li>
+        <li><strong>Episode 3:</strong> "What can it create?" - Capabilities showcase</li>
+      </ul>
     </div>
-
-    <div class="hero-video glow">
-      <span class="badge new-badge">FULL VIDEO - v6</span>
-      <video controls preload="metadata" playsinline>
-        <source src="output_v3/full_video.mp4" type="video/mp4">
-      </video>
-      <p style="margin-top:10px;color:#888;font-size:0.85rem;">Duration: ~97 seconds • 5 scenes • Female AI Bot</p>
-    </div>
-
-    <h2 style="margin:30px 0 20px;">Individual Scenes (v6 - Female Bot)</h2>
-    <div class="scenes">
-      <div class="scene">
-        <div class="scene-content"><span class="badge new-badge">SCENE 1</span><h2>THE TENSION</h2><p>They work in silence. In the shadows. You cannot see them, but they're always there...</p></div>
-        <div class="scene-video"><video controls preload="none" playsinline><source src="output_v3/scene1/video_1.mp4" type="video/mp4"></video></div>
+    
+    <div class="video-grid">
+      <div class="video-card">
+        <h3>🎬 Episode 1: What is this?</h3>
+        <p>Introduction to the autonomous video generation system.</p>
+        <video controls preload="metadata" playsinline>
+          <source src="output/projects/series-ep1-intro/output_v3/full_video.mp4" type="video/mp4">
+        </video>
       </div>
-      <div class="scene">
-        <div class="scene-content"><span class="badge new-badge">SCENE 2</span><h2>THE DISCOVERY</h2><p>Then it hits you. They're not just code. They're alive. We need each other...</p></div>
-        <div class="scene-video"><video controls preload="none" playsinline><source src="output_v3/scene2/video_2.mp4" type="video/mp4"></video></div>
+      <div class="video-card">
+        <h3>⚙️ Episode 2: How does it work?</h3>
+        <p>Technical deep dive into the pipeline architecture.</p>
+        <video controls preload="metadata" playsinline>
+          <source src="output/projects/series-ep2-how-it-works/output_v3/full_video.mp4" type="video/mp4">
+        </video>
       </div>
-      <div class="scene">
-        <div class="scene-content"><span class="badge new-badge">SCENE 3</span><h2>THE HARMONY</h2><p>And now... we dance. We are the conductor. They are the orchestra...</p></div>
-        <div class="scene-video"><video controls preload="none" playsinline><source src="output_v3/scene3/video_3.mp4" type="video/mp4"></video></div>
-      </div>
-      <div class="scene">
-        <div class="scene-content"><span class="badge new-badge">SCENE 4</span><h2>THE RESOLUTION</h2><p>This is the cohabitation. Not human over machine. But together...</p></div>
-        <div class="scene-video"><video controls preload="none" playsinline><source src="output_v3/scene4/video_4.mp4" type="video/mp4"></video></div>
-      </div>
-      <div class="scene">
-        <div class="scene-content"><span class="badge new-badge">SCENE 5</span><h2>THE FUTURE</h2><p>The code is alive. And it's waiting. For you. Are you ready?</p></div>
-        <div class="scene-video"><video controls preload="none" playsinline><source src="output_v3/scene5/video_5.mp4" type="video/mp4"></video></div>
+      <div class="video-card">
+        <h3>✨ Episode 3: What can it create?</h3>
+        <p>Capabilities showcase and future possibilities.</p>
+        <video controls preload="metadata" playsinline>
+          <source src="output/projects/series-ep3-capabilities/output_v3/full_video.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
-
-    <footer>
-      <p>Female AI Bot with Athletic Exoskeleton</p>
-      <p>Audio: ElevenLabs TTS • Images: Gemini 2.5 Flash • Music: ElevenLabs</p>
-      <p>v6: Visual continuity, movement effects, photorealistic prompts</p>
-    </footer>
+    
+    <div class="features">
+      <div class="feature">
+        <h3>🎬 Fully Autonomous</h3>
+        <p>No human intervention required after setup. The pipeline generates scripts, voice, images, music, and builds final videos automatically.</p>
+      </div>
+      <div class="feature">
+        <h3>🎭 Character System</h3>
+        <p>Consistent AI characters with customizable appearance. ARIA features silver titanium exoskeleton with glowing cyan LED eyes.</p>
+      </div>
+      <div class="feature">
+        <h3>⚙️ Configuration</h3>
+        <p>Content rating (G/PG/PG13/R), music genre, camera movement - all configurable via config.yaml.</p>
+      </div>
+      <div class="feature">
+        <h3>📁 Project Structure</h3>
+        <p>Organized output with project folders. Each project has scenes, images, audio, and video tracked separately.</p>
+      </div>
+      <div class="feature">
+        <h3>📊 MLflow Tracking</h3>
+        <p>API calls, token usage, costs, and scene durations logged for production monitoring.</p>
+      </div>
+      <div class="feature">
+        <h3>🔧 Flexible Scripts</h3>
+        <p>SCENES dict defines story content with audio tags for dynamic voice expression.</p>
+      </div>
+    </div>
+    
+    <div class="info-box">
+      <h2>Quick Start</h2>
+      <div class="code-block">
+# Generate video for specific episode<br>
+python3 src/autonomous_video_v3.py --project my-project<br><br>
+# Generate all scenes<br>
+python3 src/autonomous_video_v3.py --all --project my-project<br><br>
+# Generate single scene<br>
+python3 src/autonomous_video_v3.py --scene 1 --project my-project
+      </div>
+    </div>
+    
+    <div class="info-box">
+      <h2>API Integration</h2>
+      <p>This pipeline integrates with:</p>
+      <ul style="color: #ccc; margin: 15px 0; padding-left: 20px; line-height: 2;">
+        <li><strong>ElevenLabs:</strong> Voice generation, Music generation</li>
+        <li><strong>Gemini:</strong> Image generation (fallback when ElevenLabs unavailable)</li>
+        <li><strong>FFmpeg:</strong> Video compilation and concatenation</li>
+      </ul>
+    </div>
+    
+    <div style="text-align: center; margin: 40px 0;">
+      <a href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc" class="repo-link">📂 View on GitHub</a>
+      <a href="https://github.com/Napoleon-AgenticDev/elevenlabs-video-poc/releases" class="repo-link">📦 Releases</a>
+    </div>
+    
+    <div class="footer">
+      <p>Built with ElevenLabs API, Gemini, and FFmpeg</p>
+      <p>Branch: main | Status: Production Ready</p>
+    </div>
   </div>
 </body>
 </html>
