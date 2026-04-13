@@ -79,29 +79,16 @@
     .repo-link:hover { background: #2f363d; }
     .footer { text-align: center; margin-top: 50px; color: #666; font-size: 0.85rem; }
     
-    /* Video Section */
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-      margin: 30px 0;
-    }
-    .video-card {
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 20px;
-      border: 1px solid rgba(0,255,255,0.2);
-    }
-    .video-card h3 { color: #00ffff; margin-bottom: 10px; }
-    .video-card p { color: #aaa; font-size: 0.9rem; margin-bottom: 15px; }
-    .video-card video { width: 100%; border-radius: 10px; }
-    .video-link {
-      display: inline-block;
-      color: #ff00ff;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
-    .video-link:hover { text-decoration: underline; }
+    .hero-video { text-align: center; margin-bottom: 40px; background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; }
+    .hero-video video { max-width: 100%; border-radius: 12px; box-shadow: 0 0 40px rgba(0,255,255,0.3); }
+    .scenes { display: grid; gap: 20px; }
+    .scene { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 20px; border: 1px solid rgba(0,255,255,0.2); display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+    @media (max-width: 700px) { .scene { grid-template-columns: 1fr; } }
+    .scene-content h2 { color: #00ffff; margin-bottom: 8px; font-size: 1.1rem; }
+    .scene-content p { color: #aaa; font-size: 0.85rem; line-height: 1.5; }
+    .scene-video video { width: 100%; border-radius: 10px; }
+    .badge { display: inline-block; background: linear-gradient(90deg, #00ffff, #ff00ff); color: #000; padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; margin-bottom: 10px; font-weight: bold; }
+    .new-badge { background: linear-gradient(90deg, #ff00ff, #00ffff); }
   </style>
 </head>
 <body>
@@ -121,27 +108,36 @@
       </ul>
     </div>
     
-    <div class="video-grid">
-      <div class="video-card">
-        <h3>🎬 Episode 1: What is this?</h3>
-        <p>Introduction to the autonomous video generation system.</p>
-        <video controls preload="metadata" playsinline>
-          <source src="output/projects/series-ep1-intro/output_v3/full_video.mp4" type="video/mp4">
-        </video>
+    <!-- Legacy Videos Available in Repo -->
+    <div class="hero-video">
+      <span class="badge new-badge">FULL VIDEO - v6</span>
+      <video controls preload="metadata" playsinline>
+        <source src="output/output_v3/full_video.mp4" type="video/mp4">
+      </video>
+      <p style="margin-top:10px;color:#888;font-size:0.85rem;">Duration: ~97 seconds • 5 scenes • Female AI Bot</p>
+    </div>
+
+    <h2 style="margin:30px 0 20px;">Individual Scenes (v6 - Female Bot)</h2>
+    <div class="scenes">
+      <div class="scene">
+        <div class="scene-content"><span class="badge new-badge">SCENE 1</span><h2>THE TENSION</h2><p>They work in silence. In the shadows. You cannot see them, but they're always there...</p></div>
+        <div class="scene-video"><video controls preload="none" playsinline><source src="output/output_v3/scene1/video_1.mp4" type="video/mp4"></video></div>
       </div>
-      <div class="video-card">
-        <h3>⚙️ Episode 2: How does it work?</h3>
-        <p>Technical deep dive into the pipeline architecture.</p>
-        <video controls preload="metadata" playsinline>
-          <source src="output/projects/series-ep2-how-it-works/output_v3/full_video.mp4" type="video/mp4">
-        </video>
+      <div class="scene">
+        <div class="scene-content"><span class="badge new-badge">SCENE 2</span><h2>THE DISCOVERY</h2><p>Then it hits you. They're not just code. They're alive. We need each other...</p></div>
+        <div class="scene-video"><video controls preload="none" playsinline><source src="output/output_v3/scene2/video_2.mp4" type="video/mp4"></video></div>
       </div>
-      <div class="video-card">
-        <h3>✨ Episode 3: What can it create?</h3>
-        <p>Capabilities showcase and future possibilities.</p>
-        <video controls preload="metadata" playsinline>
-          <source src="output/projects/series-ep3-capabilities/output_v3/full_video.mp4" type="video/mp4">
-        </video>
+      <div class="scene">
+        <div class="scene-content"><span class="badge new-badge">SCENE 3</span><h2>THE HARMONY</h2><p>And now... we dance. We are the conductor. They are the orchestra...</p></div>
+        <div class="scene-video"><video controls preload="none" playsinline><source src="output/output_v3/scene3/video_3.mp4" type="video/mp4"></video></div>
+      </div>
+      <div class="scene">
+        <div class="scene-content"><span class="badge new-badge">SCENE 4</span><h2>THE RESOLUTION</h2><p>This is the cohabitation. Not human over machine. But together...</p></div>
+        <div class="scene-video"><video controls preload="none" playsinline><source src="output/output_v3/scene4/video_4.mp4" type="video/mp4"></video></div>
+      </div>
+      <div class="scene">
+        <div class="scene-content"><span class="badge new-badge">SCENE 5</span><h2>THE FUTURE</h2><p>The code is alive. And it's waiting. For you. Are you ready?</p></div>
+        <div class="scene-video"><video controls preload="none" playsinline><source src="output/output_v3/scene5/video_5.mp4" type="video/mp4"></video></div>
       </div>
     </div>
     
